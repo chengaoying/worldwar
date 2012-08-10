@@ -5,6 +5,8 @@ import javax.microedition.lcdui.Graphics;
 import cn.ohyeah.stb.game.StateRecharge;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
+import cn.ohyeah.stb.res.UIResource;
+import cn.ohyeah.stb.ui.PopupConfirm;
 
 public class StateShop {
 	
@@ -101,7 +103,12 @@ public class StateShop {
 				StateRecharge recharge = new StateRecharge(engine);
 				recharge.recharge();
 			}else{
-				pm.purchaseProp(shopX, shopY); //购买道具
+				PopupConfirm pc = UIResource.getInstance().buildDefaultPopupConfirm();
+				pc.setText("确认要购买?");
+				int index = pc.popup();
+				if(index==0){
+					pm.purchaseProp(shopX, shopY); //购买道具
+				}
 			}
 			
 		}

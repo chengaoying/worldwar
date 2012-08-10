@@ -667,8 +667,11 @@ public class DrawGame implements Common{
 		g.drawRegion(updown, pageIndex==0?0:updown.getWidth()/2, 0, updown.getWidth()/2, updown.getHeight()/2, 0, 110, 470, TopLeft);
 		g.drawRegion(updown, pageIndex==1?0:updown.getWidth()/2, updown.getHeight()/2, updown.getWidth()/2, updown.getHeight()/2, 0, 255, 470, TopLeft);
 		engine.setFont(19);
+		int color =  g.getColor();
+		g.setColor(0XFFFFFF);
 		TextView.showMultiLineText(g, Resource.helpInfo[index], 10, 80, 137, 480, 315);
 		engine.setDefaultFont();
+		g.setColor(color);
 	}
 	
 	/*清游新手指导*/

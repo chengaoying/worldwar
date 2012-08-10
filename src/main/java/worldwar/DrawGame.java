@@ -39,13 +39,13 @@ public class DrawGame implements Common{
 					i*Resource. menuH, Resource.menuW, Resource.menuH, 0, 
 					Resource.menuAxis[i][0], Resource.menuAxis[i][1], 0);
 		}
-		if(WorldWarEngine.isSupportFavor){
+		/*if(WorldWarEngine.isSupportFavor){
 			Image imgFavor = Resource.loadImage(Resource.id_favorites);
 			g.drawImage(imgFavor, 537, 442, TopLeft);
 			if(favorIndex==1){
 				DrawUtil.drawRect(g, 537, 442, 101, 84, 2, 0XFFFF00);
 			}
-		}
+		}*/
 	}
 	
 	/*Ñ¡ÔñµØÍ¼*/

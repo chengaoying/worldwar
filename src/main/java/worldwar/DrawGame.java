@@ -39,17 +39,12 @@ public class DrawGame implements Common{
 					i*Resource. menuH, Resource.menuW, Resource.menuH, 0, 
 					Resource.menuAxis[i][0], Resource.menuAxis[i][1], 0);
 		}
-		/*if(WorldWarEngine.isSupportFavor){
+		if(WorldWarEngine.isSupportFavor){
 			Image imgFavor = Resource.loadImage(Resource.id_favorites);
 			g.drawImage(imgFavor, 537, 442, TopLeft);
 			if(favorIndex==1){
 				DrawUtil.drawRect(g, 537, 442, 101, 84, 2, 0XFFFF00);
 			}
-		}*/
-		
-		if(OPEN_BATE){
-			Image openBate = Resource.loadImage(Resource.id_open_bate);
-			g.drawImage(openBate, 530, 170, TopLeft);
 		}
 	}
 	
@@ -774,7 +769,6 @@ public class DrawGame implements Common{
 	public void clearMainMenu(){
 		Resource.freeImage(Resource.id_main_bg);
 		Resource.freeImage(Resource.id_main_menu);
-		Resource.freeImage(Resource.id_open_bate);
 		Resource.freeImage(Resource.id_favorites);
 	}
 	

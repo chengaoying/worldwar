@@ -5,10 +5,8 @@ import javax.microedition.lcdui.Graphics;
 import cn.ohyeah.stb.game.StateRecharge;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
-import cn.ohyeah.stb.res.UIResource;
-import cn.ohyeah.stb.ui.PopupText;
 
-public class StateShop implements Common{
+public class StateShop {
 	
 	private WorldWarEngine engine = WorldWarEngine.instance;
 	private boolean running;
@@ -99,23 +97,11 @@ public class StateShop implements Common{
 				running = false;
 				showGame.clearShop();
 			} else	if(shopY==3 && shopX==0){ //进入充值
-				if(OPEN_BATE){
-					PopupText pt = UIResource.getInstance().buildDefaultPopupText();
-					pt.setText("公测期间不支持充值!");
-					pt.popup();
-				}else{
-					showGame.clearShop();
-					StateRecharge recharge = new StateRecharge(engine);
-					recharge.recharge();
-				}
+				showGame.clearShop();
+				StateRecharge recharge = new StateRecharge(engine);
+				recharge.recharge();
 			}else{
-				if(OPEN_BATE){
-					PopupText pt = UIResource.getInstance().buildDefaultPopupText();
-					pt.setText("公测期间不支持道具购买!");
-					pt.popup();
-				}else{
-					pm.purchaseProp(shopX, shopY); //购买道具
-				}
+				pm.purchaseProp(shopX, shopY); //购买道具
 			}
 			
 		}

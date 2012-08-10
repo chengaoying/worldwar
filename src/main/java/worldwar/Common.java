@@ -7,8 +7,6 @@ package worldwar;
  */
 public interface Common {
 	
-	public static final boolean OPEN_BATE = true;
-	
 	public static final byte GAME_STATUS_MAIN_MENU = 0;
 	public static final byte GAME_STATUS_PLAYING = 1;
 	public static final byte GAME_STATUS_HELP = 2;

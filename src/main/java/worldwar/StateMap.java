@@ -308,169 +308,157 @@ public class StateMap implements Common {
 	}
 	
 	private void handleSelectRegion(KeyState key) {
+
+		StateAssignCard sc = new StateAssignCard();
+		if (!startGame) {
+			pm.randomAssignProps(player); // 随机分配道具
+			sc.processAssignCard(map, activePlayers(), currPlayer,
+					pm.card_assign_props, pm.game_props, region, this);
+		}
+
+		AILogic();
+		gameFailOrSuccess(); 
 		
-		if(player.getRounds()>4){
-			PopupText pt = UIResource.getInstance().buildDefaultPopupText();
-			pt.setText("试玩结束,请关注正式版本发布!");
-			pt.popup();
-			engine.status = GAME_STATUS_MAIN_MENU;
-			state = STATE_SEL_MAP;
-			startGame = false;
-			map = null;
-			showGame.clearMapBG();
-			init();
-		}else{
-			StateAssignCard sc = new StateAssignCard();
-			if (!startGame) {
-				pm.randomAssignProps(player); // 随机分配道具
-				sc.processAssignCard(map, activePlayers(), currPlayer,
-						pm.card_assign_props, pm.game_props, region, this);
+		if (key.containsAndRemove(KeyCode.UP)) {
+			if (player.getState() == STATUS_ATTACK) {
+				region = map.moveUp(region);
+			}
+		}
+		if (key.containsAndRemove(KeyCode.DOWN)) {
+			if (player.getState() == STATUS_ATTACK) {
+				region = map.moveDown(region);
+			}
+		}
+		if (key.containsAndRemove(KeyCode.LEFT)) {
+			if (player.getState() == STATUS_ATTACK) {
+				region = map.moveLeft(region);
+			}
+		}
+		if (key.containsAndRemove(KeyCode.RIGHT)) {
+			if (player.getState() == STATUS_ATTACK) {
+				region = map.moveRight(region);
+			}
+		}
+		if (key.containsAndRemove(KeyCode.NUM9)) {
+			if (player.getState() == STATUS_ATTACK) {
+				player.setState(STATUS_WAIT);
+				
+				SoldiersGrowth(map.getInfluence(player.getInfluenceId()));
+				StateSoldiersGrowth ssg = new StateSoldiersGrowth();
+				ssg.processSoldiersGrowth(player, this);
+				SoldiersGrowth2(map.getInfluence(player.getInfluenceId()));
+				
+				Player[] ai = activePlayers();
+				if(player.getId()<ai.length-1){
+					ai[player.getId()+1].setState(STATUS_ATTACK);
+					pm.randomAssignProps(ai[player.getId()+1]);
+				}else{
+					ai[0].setState(STATUS_ATTACK);
+					pm.randomAssignProps(ai[0]);
+				}
 			}
 
-			AILogic();
-			gameFailOrSuccess(); 
-			
-			if (key.containsAndRemove(KeyCode.UP)) {
-				if (player.getState() == STATUS_ATTACK) {
-					region = map.moveUp(region);
-				}
-			}
-			if (key.containsAndRemove(KeyCode.DOWN)) {
-				if (player.getState() == STATUS_ATTACK) {
-					region = map.moveDown(region);
-				}
-			}
-			if (key.containsAndRemove(KeyCode.LEFT)) {
-				if (player.getState() == STATUS_ATTACK) {
-					region = map.moveLeft(region);
-				}
-			}
-			if (key.containsAndRemove(KeyCode.RIGHT)) {
-				if (player.getState() == STATUS_ATTACK) {
-					region = map.moveRight(region);
-				}
-			}
-			if (key.containsAndRemove(KeyCode.NUM9)) {
-				if (player.getState() == STATUS_ATTACK) {
-					player.setState(STATUS_WAIT);
-					
-					SoldiersGrowth(map.getInfluence(player.getInfluenceId()));
-					StateSoldiersGrowth ssg = new StateSoldiersGrowth();
-					ssg.processSoldiersGrowth(player, this);
-					SoldiersGrowth2(map.getInfluence(player.getInfluenceId()));
-					
-					Player[] ai = activePlayers();
-					if(player.getId()<ai.length-1){
-						ai[player.getId()+1].setState(STATUS_ATTACK);
-						pm.randomAssignProps(ai[player.getId()+1]);
-					}else{
-						ai[0].setState(STATUS_ATTACK);
-						pm.randomAssignProps(ai[0]);
-					}
-				}
+		}
+		if (key.containsAndRemove(KeyCode.OK)) {
+			attackOrUseCard();
+		}
 
-			}
-			if (key.containsAndRemove(KeyCode.OK)) {
-				attackOrUseCard();
-			}
-
-			if (key.containsAndRemove(KeyCode.NUM1)
-					&& player.getState() == STATUS_ATTACK) {
-				if (pm.getGamePropNums(currPlayer.getProps()) > 0) {
-					if (showGame.cardCoord[0][0] == 1) {
-						init();
-					} else {
-						init();
-						showGame.cardCoord[0][0] = 1;
-					}
-				}
-			}
-			if (key.containsAndRemove(KeyCode.NUM2)
-					&& player.getState() == STATUS_ATTACK) {
-				if (pm.getGamePropNums(currPlayer.getProps()) > 0) {
-					if (showGame.cardCoord[1][0] == 1) {
-						init();
-					} else {
-						init();
-						showGame.cardCoord[1][0] = 1;
-					}
-				}
-			}
-			if (key.containsAndRemove(KeyCode.NUM3)
-					&& player.getState() == STATUS_ATTACK) {
-				if (pm.getGamePropNums(pm.game_props) > 0) {
-					if (showGame.cardCoord[2][0] == 1) {
-						init();
-					} else {
-						init();
-						showGame.cardCoord[2][0] = 1;
-					}
-				}
-			}
-			if (key.containsAndRemove(KeyCode.NUM4)
-					&& player.getState() == STATUS_ATTACK) {
-				if (pm.getGamePropNums(pm.game_props) > 1) {
-					if (showGame.cardCoord[3][0] == 1) {
-						init();
-					} else {
-						init();
-						showGame.cardCoord[3][0] = 1;
-					}
-				}
-			}
-			if (key.containsAndRemove(KeyCode.NUM5)
-					&& player.getState() == STATUS_ATTACK) {
-				if (pm.getGamePropNums(pm.game_props) > 2) {
-					if (showGame.cardCoord[4][0] == 1) {
-						init();
-					} else {
-						init();
-						showGame.cardCoord[4][0] = 1;
-					}
-				}
-			}
-			if (key.containsAndRemove(KeyCode.NUM6)
-					&& player.getState() == STATUS_ATTACK) {
-				if (pm.getGamePropNums(pm.game_props) > 3) {
-					if (showGame.cardCoord[5][0] == 1) {
-						init();
-					} else {
-						init();
-						showGame.cardCoord[5][0] = 1;
-					}
-				}
-			}
-			if (key.containsAndRemove(KeyCode.NUM7)
-					&& player.getState() == STATUS_ATTACK) {
-				if (pm.getGamePropNums(pm.game_props) > 4) {
-					if (showGame.cardCoord[6][0] == 1) {
-						init();
-					} else {
-						init();
-						showGame.cardCoord[6][0] = 1;
-					}
-				}
-			}
-			if (key.containsAndRemove(KeyCode.NUM8)){
-				StateHelp sh = new StateHelp();
-				sh.processHelp();
-			}
-			if (key.containsAndRemove(KeyCode.NUM0)) {
-				PopupConfirm pc = UIResource.getInstance()
-						.buildDefaultPopupConfirm();
-				pc.setText("确定要退出游戏吗?");
-				int index = pc.popup();
-				if (index == 0) {
-					/* 同步道具 */
-					pm.sysProps();
-					player.setUsePropTimes(0);
-					engine.status = GAME_STATUS_MAIN_MENU;
-					state = STATE_SEL_MAP;
-					startGame = false;
-					map = null;
-					showGame.clearMapBG();
+		if (key.containsAndRemove(KeyCode.NUM1)
+				&& player.getState() == STATUS_ATTACK) {
+			if (pm.getGamePropNums(currPlayer.getProps()) > 0) {
+				if (showGame.cardCoord[0][0] == 1) {
 					init();
+				} else {
+					init();
+					showGame.cardCoord[0][0] = 1;
 				}
+			}
+		}
+		if (key.containsAndRemove(KeyCode.NUM2)
+				&& player.getState() == STATUS_ATTACK) {
+			if (pm.getGamePropNums(currPlayer.getProps()) > 0) {
+				if (showGame.cardCoord[1][0] == 1) {
+					init();
+				} else {
+					init();
+					showGame.cardCoord[1][0] = 1;
+				}
+			}
+		}
+		if (key.containsAndRemove(KeyCode.NUM3)
+				&& player.getState() == STATUS_ATTACK) {
+			if (pm.getGamePropNums(pm.game_props) > 0) {
+				if (showGame.cardCoord[2][0] == 1) {
+					init();
+				} else {
+					init();
+					showGame.cardCoord[2][0] = 1;
+				}
+			}
+		}
+		if (key.containsAndRemove(KeyCode.NUM4)
+				&& player.getState() == STATUS_ATTACK) {
+			if (pm.getGamePropNums(pm.game_props) > 1) {
+				if (showGame.cardCoord[3][0] == 1) {
+					init();
+				} else {
+					init();
+					showGame.cardCoord[3][0] = 1;
+				}
+			}
+		}
+		if (key.containsAndRemove(KeyCode.NUM5)
+				&& player.getState() == STATUS_ATTACK) {
+			if (pm.getGamePropNums(pm.game_props) > 2) {
+				if (showGame.cardCoord[4][0] == 1) {
+					init();
+				} else {
+					init();
+					showGame.cardCoord[4][0] = 1;
+				}
+			}
+		}
+		if (key.containsAndRemove(KeyCode.NUM6)
+				&& player.getState() == STATUS_ATTACK) {
+			if (pm.getGamePropNums(pm.game_props) > 3) {
+				if (showGame.cardCoord[5][0] == 1) {
+					init();
+				} else {
+					init();
+					showGame.cardCoord[5][0] = 1;
+				}
+			}
+		}
+		if (key.containsAndRemove(KeyCode.NUM7)
+				&& player.getState() == STATUS_ATTACK) {
+			if (pm.getGamePropNums(pm.game_props) > 4) {
+				if (showGame.cardCoord[6][0] == 1) {
+					init();
+				} else {
+					init();
+					showGame.cardCoord[6][0] = 1;
+				}
+			}
+		}
+		if (key.containsAndRemove(KeyCode.NUM8)){
+			StateHelp sh = new StateHelp();
+			sh.processHelp();
+		}
+		if (key.containsAndRemove(KeyCode.NUM0)) {
+			PopupConfirm pc = UIResource.getInstance()
+					.buildDefaultPopupConfirm();
+			pc.setText("确定要退出游戏吗?");
+			int index = pc.popup();
+			if (index == 0) {
+				/* 同步道具 */
+				pm.sysProps();
+				player.setUsePropTimes(0);
+				engine.status = GAME_STATUS_MAIN_MENU;
+				state = STATE_SEL_MAP;
+				startGame = false;
+				map = null;
+				showGame.clearMapBG();
+				init();
 			}
 		}
 	}
@@ -777,7 +765,7 @@ public class StateMap implements Common {
 	private Player[] activePlayers() {
 		int count = 0;
 		for (int i = 0; i < ais.length; i++) {
-			if (ais[i]!=null && !isDestroyed(map.getInfluence(ais[i].getInfluenceId()))) {
+			if (!isDestroyed(map.getInfluence(ais[i].getInfluenceId()))) {
 				count++;
 			}
 		}

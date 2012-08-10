@@ -135,14 +135,14 @@ public class WorldWarEngine extends GameCanvasEngine implements Common{
 			process();
 			showGame.clearMainMenu();
 			mainIndex=0;
-	    }/* else if (keyState.contains(KeyCode.RIGHT) && isSupportFavor) {
+	    } else if (keyState.contains(KeyCode.RIGHT) && isSupportFavor) {
 	    	keyState.remove(KeyCode.RIGHT);
 	    	favorIndex = 1;
 	    	
 	    } else if (keyState.contains(KeyCode.LEFT) && isSupportFavor) {
 	    	keyState.remove(KeyCode.LEFT);
 	    	favorIndex = 0;
-	    }*/
+	    }
 		if (keyState.contains(KeyCode.BACK)){ //返回键直接退出
 			keyState.contains(KeyCode.BACK);
 			exit = true;

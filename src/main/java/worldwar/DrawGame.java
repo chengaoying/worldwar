@@ -75,7 +75,7 @@ public class DrawGame implements Common{
 					drawNum(g, k+1, 99+(k*54), 450, true);
 					int color = g.getColor();
 					g.setColor(0Xffffff);
-					engine.setFont(19);
+					engine.setFont(12);
 					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
 					engine.setDefaultFont();
 					g.setColor(color);
@@ -97,7 +97,7 @@ public class DrawGame implements Common{
 						drawNum(g, k+3, 224+(k*54), 450, true);
 						int color = g.getColor();
 						g.setColor(0Xffffff);
-						engine.setFont(19);
+						engine.setFont(15);
 						TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
 						engine.setDefaultFont();
 						g.setColor(color);

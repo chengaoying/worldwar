@@ -33,11 +33,11 @@ public class DrawGame implements Common{
 	public void drawMainMenu(Graphics g, int index, int favorIndex){
 		Image main_bg = Resource.loadImage(Resource.id_main_bg);
 		Image main_menu = Resource.loadImage(Resource.id_main_menu);
-		g.drawImage(main_bg, 0, 0, TopLeft);
+		g.drawImage(main_bg, 0+Abs_Coords_X, 0+Abs_Coords_Y, TopLeft);
 		for (int i = 0; i < Resource.menuAxis.length; ++i) {
 			g.drawRegion(main_menu, (index != i) ? Resource.menuW : 0, 
 					i*Resource. menuH, Resource.menuW, Resource.menuH, 0, 
-					Resource.menuAxis[i][0], Resource.menuAxis[i][1], 0);
+					Resource.menuAxis[i][0]+Abs_Coords_X, Resource.menuAxis[i][1]+Abs_Coords_Y, 0);
 		}
 		/*if(WorldWarEngine.isSupportFavor){
 			Image imgFavor = Resource.loadImage(Resource.id_favorites);
@@ -52,11 +52,11 @@ public class DrawGame implements Common{
 	public void drawSelectMapMenu(Graphics g, int index){
 		Image main_bg = Resource.loadImage(Resource.id_main_bg);
 		Image map_menu = Resource.loadImage(Resource.id_map_menu);
-		g.drawImage(main_bg, 0, 0, TopLeft);
+		g.drawImage(main_bg, 0+Abs_Coords_X, 0+Abs_Coords_Y, TopLeft);
 		for (int i = 0; i < Resource.menuAxis.length; ++i) {
 			g.drawRegion(map_menu, (index != i) ? Resource.menuW : 0, 
 					i*Resource. menuH, Resource.menuW, Resource.menuH, 0, 
-					Resource.menuAxis[i][0], Resource.menuAxis[i][1], 0);
+					Resource.menuAxis[i][0]+Abs_Coords_X, Resource.menuAxis[i][1]+Abs_Coords_Y, 0);
 		}
 	}
 	
@@ -64,24 +64,24 @@ public class DrawGame implements Common{
 	public void drawMapBG(Graphics g, Propety[] game_props, Player currPlayer){
 		Image map_bg = Resource.loadImage(Resource.id_map_bg);
 		Image card = Resource.loadImage(Resource.id_card);
-		g.drawImage(map_bg, 0, 0, 0);
+		g.drawImage(map_bg, 0+Abs_Coords_X, 0+Abs_Coords_Y, 0);
 		
 		/*随机道具*/
 		for(int i=0,k=0;i<currPlayer.getProps().length;i++){
 			for(int j=0;j<currPlayer.getProps()[i].getNums();j++){
 				if(cardCoord[k][0]==1){
 					cardCoord[k][1] = currPlayer.getProps()[i].getPropId();
-					g.drawRegion(card, currPlayer.getProps()[i].getId()*49, 0, 49, 67, 0, 99+(k*54), 450, TopLeft);
-					drawNum(g, k+1, 99+(k*54), 450, true);
+					g.drawRegion(card, currPlayer.getProps()[i].getId()*49, 0, 49, 67, 0, 99+(k*54)+Abs_Coords_X, 450+Abs_Coords_Y, TopLeft);
+					drawNum(g, k+1, 99+(k*54)+Abs_Coords_X, 450+Abs_Coords_Y, true);
 					int color = g.getColor();
 					g.setColor(0Xffffff);
 					engine.setFont(19);
-					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
+					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520+Abs_Coords_X, 448+Abs_Coords_Y, 110, 69);
 					engine.setDefaultFont();
 					g.setColor(color);
 				}else{
-					g.drawRegion(card, currPlayer.getProps()[i].getId()*49, 0, 49, 67, 0, 99+(k*54), 460, TopLeft);
-					drawNum(g, k+1, 99+(k*54), 460, true);
+					g.drawRegion(card, currPlayer.getProps()[i].getId()*49, 0, 49, 67, 0, 99+(k*54)+Abs_Coords_X, 460+Abs_Coords_Y, TopLeft);
+					drawNum(g, k+1, 99+(k*54)+Abs_Coords_X, 460+Abs_Coords_Y, true);
 				}
 				k++;
 			}
@@ -93,17 +93,17 @@ public class DrawGame implements Common{
 				for(int j=0;j<game_props[i].getNums();j++){
 					if(cardCoord[k+2][0]==1){
 						cardCoord[k+2][1] = game_props[i].getPropId();
-						g.drawRegion(card, game_props[i].getId()*49, 0, 49, 67, 0, 224+(k*54), 450, TopLeft);
-						drawNum(g, k+3, 224+(k*54), 450, true);
+						g.drawRegion(card, game_props[i].getId()*49, 0, 49, 67, 0, 224+(k*54)+Abs_Coords_X, 450+Abs_Coords_Y, TopLeft);
+						drawNum(g, k+3, 224+(k*54)+Abs_Coords_X, 450+Abs_Coords_Y, true);
 						int color = g.getColor();
 						g.setColor(0Xffffff);
 						engine.setFont(19);
-						TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
+						TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520+Abs_Coords_X, 448+Abs_Coords_Y, 110, 69);
 						engine.setDefaultFont();
 						g.setColor(color);
 					}else{
-						g.drawRegion(card, game_props[i].getId()*49, 0, 49, 67, 0, 224+(k*54), 460, TopLeft);
-						drawNum(g, k+3, 224+(k*54), 460, true);
+						g.drawRegion(card, game_props[i].getId()*49, 0, 49, 67, 0, 224+(k*54)+Abs_Coords_X, 460+Abs_Coords_Y, TopLeft);
+						drawNum(g, k+3, 224+(k*54)+Abs_Coords_X, 460+Abs_Coords_Y, true);
 					}
 					k++;
 				}
@@ -115,11 +115,11 @@ public class DrawGame implements Common{
 	public void drawCardIcon(Graphics g, int propId, int x, int y){
 		Image icon = Resource.loadImage(Resource.id_card_icon);
 		if(propId<=46){
-			g.drawRegion(icon, (propId-44)*icon.getWidth()/5, 0, icon.getWidth()/5, icon.getHeight(), 0, x+13, y, TopLeft);
+			g.drawRegion(icon, (propId-44)*icon.getWidth()/5, 0, icon.getWidth()/5, icon.getHeight(), 0, x+13+Abs_Coords_X, y+Abs_Coords_Y, TopLeft);
 		}else if(propId==HIDDEN_CARD){	//隐藏卡片图标
-			g.drawRegion(icon, 3*icon.getWidth()/5, 0, icon.getWidth()/5, icon.getHeight(), 0, x+13, y, TopLeft);
+			g.drawRegion(icon, 3*icon.getWidth()/5, 0, icon.getWidth()/5, icon.getHeight(), 0, x+13+Abs_Coords_X, y+Abs_Coords_Y, TopLeft);
 		}else if(propId==ARMOURED_CARD){
-			g.drawRegion(icon, 4*icon.getWidth()/5, 0, icon.getWidth()/5, icon.getHeight(), 0, x+13, y, TopLeft);
+			g.drawRegion(icon, 4*icon.getWidth()/5, 0, icon.getWidth()/5, icon.getHeight(), 0, x+13+Abs_Coords_X, y+Abs_Coords_Y, TopLeft);
 
 		}
 	}
@@ -130,7 +130,7 @@ public class DrawGame implements Common{
 		Image over = Resource.loadImage(Resource.id_over);
 		Image over_menu = Resource.loadImage(Resource.id_over_menu);
 		
-		int mapx = 110, mapy=105;
+		int mapx = 110+Abs_Coords_X, mapy=105+Abs_Coords_Y;
 		g.drawImage(card_bg, mapx, mapy, TopLeft);
 		g.drawRegion(over, isSuccess*over.getWidth()/2, 0, over.getWidth()/2, over.getHeight(), 0, mapx+90, mapy+30, TopLeft);
 		
@@ -159,37 +159,37 @@ public class DrawGame implements Common{
 		Image card_tag = Resource.loadImage(Resource.id_card_tag);
 		int mapx=110, mapy=105;
 		
-		g.drawImage(card_bg, mapx, mapy, TopLeft);
-		g.drawImage(card_tag, mapx+270, mapy+20, TopLeft);
-		g.drawImage(card_info, mapx+265, mapy+53, TopLeft);
+		g.drawImage(card_bg, mapx+Abs_Coords_X, mapy+Abs_Coords_Y, TopLeft);
+		g.drawImage(card_tag, mapx+270+Abs_Coords_X, mapy+20+Abs_Coords_Y, TopLeft);
+		g.drawImage(card_info, mapx+265+Abs_Coords_X, mapy+53+Abs_Coords_Y, TopLeft);
 		
 		if(indexX<3){
 			engine.setFont(15);
 			g.setColor(0Xffffff);
-			TextView.showMultiLineText(g, Resource.info2[getIndex(indexX, indexY)], 5, 387, 172, 95, 125);
+			TextView.showMultiLineText(g, Resource.info2[getIndex(indexX, indexY)], 5, 387+Abs_Coords_X, 172+Abs_Coords_Y, 95, 125);
 			engine.setDefaultFont();
 		}
 		
 		if(indexY==0 && indexX==3){
-			g.drawRegion(card_menu, 0, 0, 100, 40, 0, mapx+275, mapy+210, TopLeft);
+			g.drawRegion(card_menu, 0, 0, 100, 40, 0, mapx+275+Abs_Coords_X, mapy+210+Abs_Coords_Y, TopLeft);
 		}else{
-			g.drawRegion(card_menu, 100, 0, 100, 40, 0, mapx+275, mapy+210, TopLeft);
+			g.drawRegion(card_menu, 100, 0, 100, 40, 0, mapx+275+Abs_Coords_X, mapy+210+Abs_Coords_Y, TopLeft);
 		}
 		if(indexY==1 && indexX==3){
-			g.drawRegion(card_menu, 0, 40, 100, 40, 0, mapx+275, mapy+250, TopLeft);
+			g.drawRegion(card_menu, 0, 40, 100, 40, 0, mapx+275+Abs_Coords_X, mapy+250+Abs_Coords_Y, TopLeft);
 		}else{
-			g.drawRegion(card_menu, 100, 40, 100, 40, 0, mapx+275, mapy+250, TopLeft);
+			g.drawRegion(card_menu, 100, 40, 100, 40, 0, mapx+275+Abs_Coords_X, mapy+250+Abs_Coords_Y, TopLeft);
 		}
 		
 		int card_spaceX = 81, card_spaceY = 95, name_spaceX = 82, name_spaceY = 95;
 		for(int i=0;i<3;i++){
 			for(int j=0;j<3;j++){
 				if(indexX==j && indexY==i){
-					DrawUtil.drawRect(g, mapx+(name_spaceX)*j+20, mapy+(card_spaceY)*i+20, 63, 89, 3, 0Xffff00);
+					DrawUtil.drawRect(g, mapx+(name_spaceX)*j+20+Abs_Coords_X, mapy+(card_spaceY)*i+20+Abs_Coords_Y, 63, 89, 3, 0Xffff00);
 				}
-				g.drawRegion(card, getIndex(j, i)*49, 0, 49, 67, 0, mapx+(card_spaceX)*j+28, mapy+(card_spaceY)*i+20, TopLeft);
-				g.drawImage(card_name, mapx+(name_spaceX)*j+20, mapy+(name_spaceY)*i+88, TopLeft);
-				drawNum(g, props[getIndex(j, i)].getNums(), mapx+(name_spaceX)*j+40, mapy+(name_spaceY)*i+88, true);
+				g.drawRegion(card, getIndex(j, i)*49, 0, 49, 67, 0, mapx+(card_spaceX)*j+28+Abs_Coords_X, mapy+(card_spaceY)*i+20+Abs_Coords_Y, TopLeft);
+				g.drawImage(card_name, mapx+(name_spaceX)*j+20+Abs_Coords_X, mapy+(name_spaceY)*i+88+Abs_Coords_Y, TopLeft);
+				drawNum(g, props[getIndex(j, i)].getNums(), mapx+(name_spaceX)*j+40+Abs_Coords_X, mapy+(name_spaceY)*i+88+Abs_Coords_Y, true);
 			}
 		}
 		
@@ -197,17 +197,17 @@ public class DrawGame implements Common{
 			for(int j=0;j<game_props[i].getNums();j++){
 				if(cardCoord[k+2][0]==1){
 					cardCoord[k+2][1] = game_props[i].getPropId();
-					g.drawRegion(card, game_props[i].getId()*49, 0, 49, 67, 0, 224+(k*54), 450, TopLeft);
-					drawNum(g, k+3, 224+(k*54), 450, true);
+					g.drawRegion(card, game_props[i].getId()*49, 0, 49, 67, 0, 224+(k*54)+Abs_Coords_X, 450+Abs_Coords_Y, TopLeft);
+					drawNum(g, k+3, 224+(k*54)+Abs_Coords_X, 450+Abs_Coords_Y, true);
 					int color = g.getColor();
 					g.setColor(0Xffffff);
 					engine.setFont(19);
-					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
+					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520+Abs_Coords_X, 448+Abs_Coords_Y, 110, 69);
 					engine.setDefaultFont();
 					g.setColor(color);
 				}else{
-					g.drawRegion(card, game_props[i].getId()*49, 0, 49, 67, 0, 224+(k*54), 460, TopLeft);
-					drawNum(g, k+3, 224+(k*54), 460, true);
+					g.drawRegion(card, game_props[i].getId()*49, 0, 49, 67, 0, 224+(k*54)+Abs_Coords_X, 460+Abs_Coords_Y, TopLeft);
+					drawNum(g, k+3, 224+(k*54)+Abs_Coords_X, 460+Abs_Coords_Y, true);
 				}
 				k++;
 			}
@@ -225,51 +225,51 @@ public class DrawGame implements Common{
 		Image shop_card_bg = Resource.loadImage(Resource.id_shop_card_bg);
 		Image shop_recharge = Resource.loadImage(Resource.id_shop_recharge);
 		
-		g.drawImage(shop_bg, 0, 0, TopLeft);
-		g.drawImage(info_bg, 35, 350, TopLeft);
-		g.drawImage(shop_title, 250, 20, TopLeft);
-		g.drawImage(shop_balance, 31, 470, TopLeft);
-		drawNum(g, engine.getEngineService().getBalance(), 101, 470, true);
+		g.drawImage(shop_bg, 0+Abs_Coords_X, 0+Abs_Coords_Y, TopLeft);
+		g.drawImage(info_bg, 35+Abs_Coords_X, 350+Abs_Coords_Y, TopLeft);
+		g.drawImage(shop_title, 250+Abs_Coords_X, 20+Abs_Coords_Y, TopLeft);
+		g.drawImage(shop_balance, 31+Abs_Coords_X, 470+Abs_Coords_Y, TopLeft);
+		drawNum(g, engine.getEngineService().getBalance(), 101+Abs_Coords_X, 470+Abs_Coords_Y, true);
 		
 		if(shopY==3 && shopX==1){
-			g.drawRegion(shop_recharge, 0, 40, 100, 40, 0, 495, 470, TopLeft);
+			g.drawRegion(shop_recharge, 0, 40, 100, 40, 0, 495+Abs_Coords_X, 470+Abs_Coords_Y, TopLeft);
 		}else{
-			g.drawRegion(shop_recharge, 100, 40, 100, 40, 0, 495, 470, TopLeft);
+			g.drawRegion(shop_recharge, 100, 40, 100, 40, 0, 495+Abs_Coords_X, 470+Abs_Coords_Y, TopLeft);
 		}
 		if(shopY==3 && shopX==0){
-			g.drawRegion(shop_recharge, 0, 0, 100, 40, 0, 350, 470, TopLeft);
+			g.drawRegion(shop_recharge, 0, 0, 100, 40, 0, 350+Abs_Coords_X, 470+Abs_Coords_Y, TopLeft);
 		}else{
-			g.drawRegion(shop_recharge, 100, 0, 100, 40, 0, 350, 470, TopLeft);
+			g.drawRegion(shop_recharge, 100, 0, 100, 40, 0, 350+Abs_Coords_X, 470+Abs_Coords_Y, TopLeft);
 		}
 		
 		int x = 31, y = 69, spaceX = 25, spaceY = 8;
 		for(int i=0;i<3;i++){
 			for(int j=0;j<3;j++){
-				g.drawRegion(shop_card_bg, 179, 0, 179, 89, 0, x+(spaceX+179)*j, y+(spaceY+89)*i, TopLeft);
+				g.drawRegion(shop_card_bg, 179, 0, 179, 89, 0, x+(spaceX+179)*j+Abs_Coords_X, y+(spaceY+89)*i+Abs_Coords_Y, TopLeft);
 			}
 		}
 		int mapx = 25, mapy = 63;
 		for(int i=0;i<3;i++){
 			for(int j=0;j<3;j++){
 				if(shopX==j && shopY==i){
-					g.drawRegion(shop_card_bg, 0, 0, 179, 89, 0, mapx+(spaceX+179)*j, mapy+(spaceY+89)*i, TopLeft);
-					g.drawRegion(card, getIndex(j, i)*49, 0, 49, 67, 0, mapx+(spaceX+179)*j+10, mapy+(spaceY+89)*i+9, TopLeft);
-					g.drawImage(shop_price, mapx+(spaceX+179)*j+65, mapy+(spaceY+89)*i+12, TopLeft);
-					drawNum(g, props[getIndex(j, i)].getPrice(), mapx+(spaceX+179)*j+130, mapy+(spaceY+89)*i+12, true);
-					drawNum(g, props[getIndex(j, i)].getNums(), mapx+(spaceX+179)*j+130, mapy+(spaceY+89)*i+44, true);
+					g.drawRegion(shop_card_bg, 0, 0, 179, 89, 0, mapx+(spaceX+179)*j+Abs_Coords_X, mapy+(spaceY+89)*i+Abs_Coords_Y, TopLeft);
+					g.drawRegion(card, getIndex(j, i)*49, 0, 49, 67, 0, mapx+(spaceX+179)*j+10+Abs_Coords_X, mapy+(spaceY+89)*i+9+Abs_Coords_Y, TopLeft);
+					g.drawImage(shop_price, mapx+(spaceX+179)*j+65+Abs_Coords_X, mapy+(spaceY+89)*i+12+Abs_Coords_Y, TopLeft);
+					drawNum(g, props[getIndex(j, i)].getPrice(), mapx+(spaceX+179)*j+130+Abs_Coords_X, mapy+(spaceY+89)*i+12+Abs_Coords_Y, true);
+					drawNum(g, props[getIndex(j, i)].getNums(), mapx+(spaceX+179)*j+130+Abs_Coords_X, mapy+(spaceY+89)*i+44+Abs_Coords_Y, true);
 				}else{
-					g.drawRegion(shop_card_bg, 0, 0, 179, 89, 0, x+(spaceX+179)*j, y+(spaceY+89)*i, TopLeft);
-					g.drawRegion(card, getIndex(j, i)*49, 0, 49, 67, 0, x+(spaceX+179)*j+10, y+(spaceY+89)*i+9, TopLeft);
-					g.drawImage(shop_price, x+(spaceX+179)*j+65, y+(spaceY+89)*i+12, TopLeft);
-					drawNum(g, props[getIndex(j, i)].getPrice(), x+(spaceX+179)*j+130, y+(spaceY+89)*i+12, true);
-					drawNum(g, props[getIndex(j, i)].getNums(), x+(spaceX+179)*j+130, y+(spaceY+89)*i+44, true);
+					g.drawRegion(shop_card_bg, 0, 0, 179, 89, 0, x+(spaceX+179)*j+Abs_Coords_X, y+(spaceY+89)*i+Abs_Coords_Y, TopLeft);
+					g.drawRegion(card, getIndex(j, i)*49, 0, 49, 67, 0, x+(spaceX+179)*j+10+Abs_Coords_X, y+(spaceY+89)*i+9+Abs_Coords_Y, TopLeft);
+					g.drawImage(shop_price, x+(spaceX+179)*j+65+Abs_Coords_X, y+(spaceY+89)*i+12+Abs_Coords_Y, TopLeft);
+					drawNum(g, props[getIndex(j, i)].getPrice(), x+(spaceX+179)*j+130+Abs_Coords_X, y+(spaceY+89)*i+12+Abs_Coords_Y, true);
+					drawNum(g, props[getIndex(j, i)].getNums(), x+(spaceX+179)*j+130+Abs_Coords_X, y+(spaceY+89)*i+44+Abs_Coords_Y, true);
 				}
 			}
 		}
 		if(shopY<3){
 			engine.setFont(19);
 			g.setColor(0Xffffff);
-			TextView.showMultiLineText(g, Resource.info[getIndex(shopX, shopY)], 5, 56, 385, 522, 55);
+			TextView.showMultiLineText(g, Resource.info[getIndex(shopX, shopY)], 5, 56+Abs_Coords_X, 385+Abs_Coords_Y, 522, 55);
 			engine.setDefaultFont();
 		}
 	}
@@ -296,12 +296,12 @@ public class DrawGame implements Common{
 			if(p!=null && p.getState() != GAME_OVER){
 				int id_AI = Resource.getColorLocation(p.getColor());
 				int mapx = 12+i*(3+playerImg.getWidth()/6);
-				g.drawRegion(playerImg, id_AI*playerImg.getWidth()/6, 0, playerImg.getWidth()/6, playerImg.getHeight(), 0, mapx, 0, TopLeft);
+				g.drawRegion(playerImg, id_AI*playerImg.getWidth()/6, 0, playerImg.getWidth()/6, playerImg.getHeight(), 0, mapx+Abs_Coords_X, 0+Abs_Coords_Y, TopLeft);
 				int num = sm.serachRegionsByInfId(ais[i].getInfluenceId()).length;
 				if(num<10){
-					drawNum(g, num, mapx+(84-13), 68-25, false);
+					drawNum(g, num, mapx+(84-13)+Abs_Coords_X, 68-25+Abs_Coords_Y, false);
 				}else{
-					drawNum(g, num, mapx+(84-26), 68-25, false);
+					drawNum(g, num, mapx+(84-26)+Abs_Coords_X, 68-25+Abs_Coords_Y, false);
 				}
 				id_role = Resource.getSoliderId_fighting(p.getColor());
 				if(id_role == Resource.id_soldier_2){
@@ -310,18 +310,18 @@ public class DrawGame implements Common{
 				Image solider = Resource.loadImage(id_role);
 				Image playerName = Resource.loadImage(Resource.id_playerName);
 				int x = mapx+playerImg.getWidth()/12-solider.getWidth()/2;
-				g.drawImage(solider, x, 5, TopLeft);
-				g.drawImage(playerName, 12+i*(3+playerImg.getWidth()/6), 68, TopLeft);
+				g.drawImage(solider, x+Abs_Coords_X, 5+Abs_Coords_Y, TopLeft);
+				g.drawImage(playerName, 12+i*(3+playerImg.getWidth()/6)+Abs_Coords_X, 68+Abs_Coords_Y, TopLeft);
 				
 				g.setColor(0XFFFFFF);
 				if(p.getId() == StateMap.playerIndex){
-					g.drawString("玩家", 40+i*(3+playerImg.getWidth()/6), 68, TopLeft);
+					g.drawString("玩家", 40+i*(3+playerImg.getWidth()/6)+Abs_Coords_X, 68+Abs_Coords_Y, TopLeft);
 				}else{
-					g.drawString(Resource.countrys[ran][i], 40+i*(3+playerImg.getWidth()/6), 68, TopLeft);
+					g.drawString(Resource.countrys[ran][i], 40+i*(3+playerImg.getWidth()/6)+Abs_Coords_X, 68+Abs_Coords_Y, TopLeft);
 				}
 				
 				if(p == currPlayer){
-					DrawUtil.drawRect(g, mapx-1, 3, 85, 83, 3, 0Xffff00);
+					DrawUtil.drawRect(g, mapx-1+Abs_Coords_X, 3+Abs_Coords_Y, 85, 83, 3, 0Xffff00);
 				}
 			}
 		}
@@ -349,26 +349,26 @@ public class DrawGame implements Common{
 		Image dice = Resource.loadImage(id_dice);
 		Image dice2 = Resource.loadImage(id_dice2);
 		Image fight_fail = Resource.loadImage(Resource.id_fight_fail);
-		g.drawImage(battle_bg, 120, 125, TopLeft);
-		g.drawRegion(battle_bg2, Resource.getColorLocation(color_attack)*129, 0, 129, 255, 0, 134, 138, TopLeft);
-		g.drawRegion(battle_bg2, Resource.getColorLocation(color_embattled)*129, 0, 129, 255, 0, 345, 138, TopLeft);
+		g.drawImage(battle_bg, 120+Abs_Coords_X, 125+Abs_Coords_Y, TopLeft);
+		g.drawRegion(battle_bg2, Resource.getColorLocation(color_attack)*129, 0, 129, 255, 0, 134+Abs_Coords_X, 138+Abs_Coords_Y, TopLeft);
+		g.drawRegion(battle_bg2, Resource.getColorLocation(color_embattled)*129, 0, 129, 255, 0, 345+Abs_Coords_X, 138+Abs_Coords_Y, TopLeft);
 		Image card = null;
 		Image card_2 = null;
 		Image plus = null;
 		if(region_attack.getPropId2()==ARMOURED_CARD){
 			card = Resource.loadImage(Resource.id_card);
 			plus = Resource.loadImage(Resource.id_plus);
-			g.drawRegion(card, (region_attack.getPropId2()-44)*card.getWidth()/9, 0, card.getWidth()/9, card.getHeight(), 0, 134, 138, TopLeft);
-			g.drawImage(plus, card.getWidth()/9+140, 155, TopLeft);
-			drawNum(g, 6, card.getWidth()/9+174, 155, false);
+			g.drawRegion(card, (region_attack.getPropId2()-44)*card.getWidth()/9, 0, card.getWidth()/9, card.getHeight(), 0, 134+Abs_Coords_X, 138+Abs_Coords_Y, TopLeft);
+			g.drawImage(plus, card.getWidth()/9+140+Abs_Coords_X, 155+Abs_Coords_Y, TopLeft);
+			drawNum(g, 6, card.getWidth()/9+174+Abs_Coords_X, 155+Abs_Coords_Y, false);
 		}
 		if(region_embattled.getPropId()==DEFENSE_CARD || region_embattled.getPropId()==RETREAT_CARD || region_embattled.getPropId()==LANDMINE_CARD){
 			card_2 = Resource.loadImage(Resource.id_card);
-			g.drawRegion(card_2, (region_embattled.getPropId()-44)*card_2.getWidth()/9, 0, card_2.getWidth()/9, card_2.getHeight(), 0, 345, 138, TopLeft);
+			g.drawRegion(card_2, (region_embattled.getPropId()-44)*card_2.getWidth()/9, 0, card_2.getWidth()/9, card_2.getHeight(), 0, 345+Abs_Coords_X, 138+Abs_Coords_Y, TopLeft);
 			if(region_embattled.getPropId()==DEFENSE_CARD){
 				plus = Resource.loadImage(Resource.id_plus);
-				g.drawImage(plus, card_2.getWidth()/9+355, 155, TopLeft);
-				drawNum(g, 6, card_2.getWidth()/9+385, 155, false);
+				g.drawImage(plus, card_2.getWidth()/9+355+Abs_Coords_X, 155+Abs_Coords_Y, TopLeft);
+				drawNum(g, 6, card_2.getWidth()/9+385+Abs_Coords_X, 155+Abs_Coords_Y, false);
 			}
 		}
 		
@@ -389,10 +389,10 @@ public class DrawGame implements Common{
 			//System.out.println("动画播放结束");
 		}
 		for(int i=0;i<region_attack.getSoldiers();i++){
-			g.drawRegion(dice, 23*diceIndex, 0, 23, 26, 0, 135+135, 138+i*32, TopLeft);
+			g.drawRegion(dice, 23*diceIndex, 0, 23, 26, 0, 135+135+Abs_Coords_X, 138+i*32+Abs_Coords_Y, TopLeft);
 		}
 		for(int j=0;j<region_embattled.getSoldiers();j++){
-			g.drawRegion(dice2, 23*diceIndex, 0, 23, 26, 0, 135+180, 138+j*32, TopLeft);
+			g.drawRegion(dice2, 23*diceIndex, 0, 23, 26, 0, 135+180+Abs_Coords_X, 138+j*32+Abs_Coords_Y, TopLeft);
 		}
 		
 		/*士兵*/
@@ -419,8 +419,8 @@ public class DrawGame implements Common{
 			}else{
 				index = 4;
 			}
-			drawNum(g, attack_num, 190, 350, false);
-			drawNum(g, embattled_num, 410, 350, false);
+			drawNum(g, attack_num, 190+Abs_Coords_X, 350+Abs_Coords_Y, false);
+			drawNum(g, embattled_num, 410+Abs_Coords_X, 350+Abs_Coords_Y, false);
 			if(index==4){
 				mapy -= 10;
 			}
@@ -431,8 +431,8 @@ public class DrawGame implements Common{
 						fight_fail.getWidth()/5, 
 						fight_fail.getHeight(), 
 						0, 
-						190-(fight_fail.getWidth()/10), 
-						mapy, 
+						190-(fight_fail.getWidth()/10)+Abs_Coords_X, 
+						mapy+Abs_Coords_Y, 
 						TopLeft);
 			}else{
 				g.drawRegion(fight_fail, 
@@ -441,8 +441,8 @@ public class DrawGame implements Common{
 						fight_fail.getWidth()/5, 
 						fight_fail.getHeight(), 
 						0, 
-						410-(fight_fail.getWidth()/10),
-						mapy, 
+						410-(fight_fail.getWidth()/10)+Abs_Coords_X,
+						mapy+Abs_Coords_Y, 
 						TopLeft);
 			}
 		}
@@ -485,100 +485,100 @@ public class DrawGame implements Common{
 		
 		if(count == 1){
 			if(id_solider_fighting == Resource.id_soldier_2){
-				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135, 223, TopLeft);
+				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135+Abs_Coords_X, 223+Abs_Coords_Y, TopLeft);
 			}else if(id_solider_fighting == Resource.id_soldier_1){
-				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+180, 214, TopLeft);
+				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+180+Abs_Coords_X, 214+Abs_Coords_Y, TopLeft);
 			}else{
-				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+171, 217, TopLeft);
+				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+171+Abs_Coords_X, 217+Abs_Coords_Y, TopLeft);
 			}
 		} else if(count == 2){
 			for(int i=0;i<count;i++){
 				if(id_solider_fighting == Resource.id_soldier_2){
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135, 223+i*12, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135+Abs_Coords_X, 223+i*12+Abs_Coords_Y, TopLeft);
 				}else if(id_solider_fighting == Resource.id_soldier_1){
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+169+i*12, 210+i*10, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+169+i*12+Abs_Coords_X, 210+i*10+Abs_Coords_Y, TopLeft);
 				}else {
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+159+i*15, 213+i*10, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+159+i*15+Abs_Coords_X, 213+i*10+Abs_Coords_Y, TopLeft);
 				}
 			}
 		} else if(count == 3){
 			for(int i=0;i<count;i++){
 				if(id_solider_fighting == Resource.id_soldier_2){
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135, 211+i*12, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135+Abs_Coords_X, 211+i*12+Abs_Coords_Y, TopLeft);
 				}else if(id_solider_fighting == Resource.id_soldier_1){
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+157+i*12, 204+i*10, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+157+i*12+Abs_Coords_X, 204+i*10+Abs_Coords_Y, TopLeft);
 				}else{
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+146+i*12, 207+i*10, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+146+i*12+Abs_Coords_X, 207+i*10+Abs_Coords_Y, TopLeft);
 				}
 			}
 		} else if(count == 4){
 			if(id_tank_fighting == Resource.id_tank_2){
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+150, 209, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+150+Abs_Coords_X, 209+Abs_Coords_Y, TopLeft);
 			}else if(id_tank_fighting == Resource.id_tank_1){
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+147, 211, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+147+Abs_Coords_X, 211+Abs_Coords_Y, TopLeft);
 			}else{
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+148, 218, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+148+Abs_Coords_X, 218+Abs_Coords_Y, TopLeft);
 			}
 		} else if(count == 5){
 			if(id_tank_fighting == Resource.id_tank_2){
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+150, 190, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+150+Abs_Coords_X, 190+Abs_Coords_Y, TopLeft);
 			}else if(id_tank_fighting == Resource.id_tank_1){
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+147, 185, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+147+Abs_Coords_X, 185+Abs_Coords_Y, TopLeft);
 			}else{
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+148, 198, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+148+Abs_Coords_X, 198+Abs_Coords_Y, TopLeft);
 			}
 			
 			if(id_solider_fighting == Resource.id_soldier_2){
-				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135, 258, TopLeft);
+				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135+Abs_Coords_X, 258+Abs_Coords_Y, TopLeft);
 			}else if(id_solider_fighting == Resource.id_soldier_1){
-				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+180, 241, TopLeft);
+				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+180+Abs_Coords_X, 241+Abs_Coords_Y, TopLeft);
 			}else{
-				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+171, 237, TopLeft);
+				g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+171+Abs_Coords_X, 237+Abs_Coords_Y, TopLeft);
 			}
 			
 		} else if(count == 6){
 			if(id_tank_fighting == Resource.id_tank_2){
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+150, 180, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+150+Abs_Coords_X, 180+Abs_Coords_Y, TopLeft);
 			}else if(id_tank_fighting == Resource.id_tank_1){
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+147, 185, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+147+Abs_Coords_X, 185+Abs_Coords_Y, TopLeft);
 			}else{
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+148, 198, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+148+Abs_Coords_X, 198+Abs_Coords_Y, TopLeft);
 			}
 			
 			for(int i=0;i<count-4;i++){
 				if(id_solider_fighting == Resource.id_soldier_2){
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135, 248+i*17, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135+Abs_Coords_X, 248+i*17+Abs_Coords_Y, TopLeft);
 				}else if(id_solider_fighting == Resource.id_soldier_1){
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+159+i*12, 241+i*10, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+159+i*12+Abs_Coords_X, 241+i*10+Abs_Coords_Y, TopLeft);
 				}else{
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+159+i*12, 237+i*10, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+159+i*12+Abs_Coords_X, 237+i*10+Abs_Coords_Y, TopLeft);
 				}
 			}
 		} else if(count == 7){
 			if(id_tank_fighting == Resource.id_tank_2){
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+150, 168, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+150+Abs_Coords_X, 168+Abs_Coords_Y, TopLeft);
 			}else if(id_tank_fighting == Resource.id_tank_1){
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+147, 185, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+147+Abs_Coords_X, 185+Abs_Coords_Y, TopLeft);
 			}else{
-				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+148, 198, TopLeft);
+				g.drawRegion(tank, 0, 0, tank.getWidth(), tank.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+148+Abs_Coords_X, 198+Abs_Coords_Y, TopLeft);
 			}
 			
 			for(int i=0;i<count-4;i++){
 				if(id_solider_fighting == Resource.id_soldier_2){
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135, 234+i*17, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+135+Abs_Coords_X, 234+i*17+Abs_Coords_Y, TopLeft);
 				}else if(id_solider_fighting == Resource.id_soldier_1){
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+157+i*12, 235+i*10, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+157+i*12+Abs_Coords_X, 235+i*10+Abs_Coords_Y, TopLeft);
 				}else{
-					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+146+i*15, 227+i*10, TopLeft);
+					g.drawRegion(solider, 0, 0, solider.getWidth(), solider.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+146+i*15+Abs_Coords_X, 227+i*10+Abs_Coords_Y, TopLeft);
 				}
 			}
 		} else if(count == 8){
 			if(id_airplane_fighting == Resource.id_airplane_1){
-				g.drawRegion(airplane, 0, 0, airplane.getWidth(), airplane.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+137, 227, TopLeft);
+				g.drawRegion(airplane, 0, 0, airplane.getWidth(), airplane.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+137+Abs_Coords_X, 227+Abs_Coords_Y, TopLeft);
 			} else if(id_airplane_fighting == Resource.id_airplane_2){
-				g.drawRegion(airplane, 0, 0, airplane.getWidth(), airplane.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+142, 213, TopLeft);
+				g.drawRegion(airplane, 0, 0, airplane.getWidth(), airplane.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+142+Abs_Coords_X, 213+Abs_Coords_Y, TopLeft);
 			} else{
-				g.drawRegion(airplane, 0, 0, airplane.getWidth(), airplane.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+137, 216, TopLeft);
+				g.drawRegion(airplane, 0, 0, airplane.getWidth(), airplane.getHeight(), isAttackRegion==true?0:Sprite.TRANS_MIRROR, x+137+Abs_Coords_X, 216+Abs_Coords_Y, TopLeft);
 			}
 		}
 		
@@ -591,25 +591,25 @@ public class DrawGame implements Common{
 			id_solider = Resource.getSoliderId(inf.getColor());
 			Image solider = Resource.loadImage(id_solider);
 			for(int i=0;i<count;i++){
-				g.drawImage(solider, (coor_x-solider.getWidth()/2)+i*pixelInterval, coor_y-solider.getHeight()/2, TopLeft);
+				g.drawImage(solider, (coor_x-solider.getWidth()/2)+i*pixelInterval+Abs_Coords_X, coor_y-solider.getHeight()/2+Abs_Coords_Y, TopLeft);
 			}
 		}
 		if(count<8 && count>3){
 			id_tank = Resource.getTankId(inf.getColor());
 			Image tank = Resource.loadImage(id_tank);
-			g.drawImage(tank, coor_x-tank.getWidth()/2, coor_y-tank.getHeight()/2-5, TopLeft);
+			g.drawImage(tank, coor_x-tank.getWidth()/2+Abs_Coords_X, coor_y-tank.getHeight()/2-5+Abs_Coords_Y, TopLeft);
 			if(count>4){
 				id_solider = Resource.getSoliderId(inf.getColor());
 				Image solider = Resource.loadImage(id_solider);
 				for(int i=0;i<count-4;i++){
-					g.drawImage(solider, coor_x-solider.getWidth()/2+i*pixelInterval, coor_y-solider.getHeight()/2+5, TopLeft);
+					g.drawImage(solider, coor_x-solider.getWidth()/2+i*pixelInterval+Abs_Coords_X, coor_y-solider.getHeight()/2+5+Abs_Coords_Y, TopLeft);
 				}
 			}
 		}
 		if(count==8){
 			id_airplane = Resource.getAirplaneId(inf.getColor());
 			Image airplane = Resource.loadImage(id_airplane);
-			g.drawImage(airplane, coor_x-airplane.getWidth()/2, coor_y-airplane.getHeight()/2, TopLeft);
+			g.drawImage(airplane, coor_x-airplane.getWidth()/2+Abs_Coords_X, coor_y-airplane.getHeight()/2+Abs_Coords_Y, TopLeft);
 		}
 	}
 
@@ -621,11 +621,11 @@ public class DrawGame implements Common{
 		Image rank_tag = Resource.loadImage(Resource.id_rank_tag);
 		Image return_button = Resource.loadImage(Resource.id_return_button);
 	
-		g.drawImage(bg, 0, 0, TopLeft);
-		g.drawImage(rank_info, 50, 88, TopLeft);
-		g.drawImage(ranking, 78, 475, TopLeft);
-		g.drawImage(rank_tag, 263, 27, TopLeft);
-		g.drawImage(return_button, 435, 470, TopLeft);
+		g.drawImage(bg, 0+Abs_Coords_X, 0+Abs_Coords_Y, TopLeft);
+		g.drawImage(rank_info, 50+Abs_Coords_X, 88+Abs_Coords_Y, TopLeft);
+		g.drawImage(ranking, 78+Abs_Coords_X, 475+Abs_Coords_Y, TopLeft);
+		g.drawImage(rank_tag, 263+Abs_Coords_X, 27+Abs_Coords_Y, TopLeft);
+		g.drawImage(return_button, 435+Abs_Coords_X, 470+Abs_Coords_Y, TopLeft);
 		
 		engine.setFont(19);
 		String ownRank="榜上无名!";
@@ -639,12 +639,12 @@ public class DrawGame implements Common{
 				if(userId.equals(engine.getEngineService().getUserId())){
 					ownRank = String.valueOf(gameRanking[i].getRanking());
 				}
-				TextView.showSingleLineText(g, String.valueOf(rank), 80, 152+(i*30), 50, 30, 1);
-				TextView.showSingleLineText(g, userId, 192, 152+(i*30), 200, 30, 1);
-				TextView.showSingleLineText(g, String.valueOf(scores), 475, 152+(i*30), 90, 30, 1);
+				TextView.showSingleLineText(g, String.valueOf(rank), 80+Abs_Coords_X, 152+(i*30)+Abs_Coords_Y, 50, 30, 1);
+				TextView.showSingleLineText(g, userId, 192+Abs_Coords_X, 152+(i*30)+Abs_Coords_Y, 200, 30, 1);
+				TextView.showSingleLineText(g, String.valueOf(scores), 475+Abs_Coords_X, 152+(i*30)+Abs_Coords_Y, 90, 30, 1);
 			}
 		}
-		g.drawString(ownRank, 105+98, 477, TopLeft);
+		g.drawString(ownRank, 105+98+Abs_Coords_X, 477+Abs_Coords_Y, TopLeft);
 		g.setColor(color);
 	}
 	
@@ -653,9 +653,9 @@ public class DrawGame implements Common{
 		Image freshman = Resource.loadImage(Resource.id_freshman);
 		Image freshman2 = Resource.loadImage(Resource.id_freshman2);
 		if(index==0){
-			g.drawImage(freshman, 0, 0, TopLeft);
+			g.drawImage(freshman, 0+Abs_Coords_X, 0+Abs_Coords_Y, TopLeft);
 		}else{
-			g.drawImage(freshman2, 0, 0, TopLeft);
+			g.drawImage(freshman2, 0+Abs_Coords_X, 0+Abs_Coords_Y, TopLeft);
 		}
 	}
 	
@@ -663,11 +663,11 @@ public class DrawGame implements Common{
 	public void drawHelp(Graphics g, int index, int pageIndex){
 		Image help = Resource.loadImage(Resource.id_help);
 		Image updown = Resource.loadImage(Resource.id_updown);
-		g.drawImage(help, 0, 0, TopLeft);
-		g.drawRegion(updown, pageIndex==0?0:updown.getWidth()/2, 0, updown.getWidth()/2, updown.getHeight()/2, 0, 110, 470, TopLeft);
-		g.drawRegion(updown, pageIndex==1?0:updown.getWidth()/2, updown.getHeight()/2, updown.getWidth()/2, updown.getHeight()/2, 0, 255, 470, TopLeft);
+		g.drawImage(help, 0+Abs_Coords_X, 0+Abs_Coords_Y, TopLeft);
+		g.drawRegion(updown, pageIndex==0?0:updown.getWidth()/2, 0, updown.getWidth()/2, updown.getHeight()/2, 0, 110+Abs_Coords_X, 470+Abs_Coords_Y, TopLeft);
+		g.drawRegion(updown, pageIndex==1?0:updown.getWidth()/2, updown.getHeight()/2, updown.getWidth()/2, updown.getHeight()/2, 0, 255+Abs_Coords_X, 470+Abs_Coords_Y, TopLeft);
 		engine.setFont(19);
-		TextView.showMultiLineText(g, Resource.helpInfo[index], 10, 80, 137, 480, 315);
+		TextView.showMultiLineText(g, Resource.helpInfo[index], 10+Abs_Coords_X, 80+Abs_Coords_Y, 137, 480, 315);
 		engine.setDefaultFont();
 	}
 	

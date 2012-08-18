@@ -6,7 +6,7 @@ import javax.microedition.lcdui.Image;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
 
-public class StateSoldiersGrowth {
+public class StateSoldiersGrowth implements Common{
 	
 	private WorldWarEngine engine = WorldWarEngine.instance;
 	private boolean running;

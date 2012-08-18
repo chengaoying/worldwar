@@ -102,8 +102,8 @@ public class Map {
 		        }
 		        this.screenWidth = IOUtil.readInt(is);
 		        this.screenHeight = IOUtil.readInt(is);
-		        this.x = IOUtil.readInt(is);
-		        this.y = IOUtil.readInt(is);
+		        this.x = IOUtil.readInt(is)+35;
+		        this.y = IOUtil.readInt(is)+20;
 		        this.width = IOUtil.readInt(is);
 		        this.height = IOUtil.readInt(is);
 		        this.sideLen = IOUtil.readInt(is);

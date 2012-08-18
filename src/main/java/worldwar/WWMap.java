@@ -61,7 +61,7 @@ public class WWMap extends Map implements Common{
 			 String nums = String.valueOf(r.getSoldiers());
 			 int w = font.stringWidth(nums)/2;
 			 int h = font.getHeight()/2;
-			 showGame.drawNum(g, r.getSoldiers(), r.getCenterTileX()-w, r.getCenterTileY()-h, true);
+			 showGame.drawNum(g, r.getSoldiers(), r.getCenterTileX()-w+Abs_Coords_X, r.getCenterTileY()-h+Abs_Coords_Y, true);
 			 if(r.getPropId()==DEFENSE_CARD || r.getPropId()==RETREAT_CARD || r.getPropId()==LANDMINE_CARD || r.getPropId()==HIDDEN_CARD){
 				 if(sm.player.getInfluenceId()==r.getInfluenceId()
 						 || sm.player.isInvestigateCard()){

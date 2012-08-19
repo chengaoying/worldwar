@@ -1,8 +1,7 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
-
 import cn.ohyeah.itvgame.model.GameAttainment;
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.game.ServiceWrapper;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
@@ -1134,7 +1133,7 @@ public class StateMap implements Common {
 			regions[i].setGrowthSoldiers((short)0);
 		}
 	}
-	public void show(Graphics g) {
+	public void show(SGraphics g) {
 		switch (state) {
 		case STATE_SEL_MAP:
 			showSelectMap(g);
@@ -1147,7 +1146,7 @@ public class StateMap implements Common {
 		}
 	}
 
-	public void showSelectRegion(Graphics g) {
+	public void showSelectRegion(SGraphics g) {
 		g.setColor(0XFFFFFF);
 		g.fillRect(0, 0, engine.getScreenWidth(), engine.getScreenHeight());
 		map.drawMap(g, activePlayers(), currPlayer, pm.game_props, showGame,
@@ -1160,7 +1159,7 @@ public class StateMap implements Common {
 		 */
 	}
 
-	private void showSelectMap(Graphics g) {
+	private void showSelectMap(SGraphics g) {
 		/*
 		 * g.setColor(0); g.fillRect(0, 0, engine.getScreenWidth(),
 		 * engine.getScreenHeight()); mapMenu.show(g);

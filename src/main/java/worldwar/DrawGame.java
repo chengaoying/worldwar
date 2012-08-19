@@ -4,6 +4,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.Sprite;
 import cn.ohyeah.itvgame.model.GameRanking;
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.ui.DrawUtil;
 import cn.ohyeah.stb.ui.TextView;
 
@@ -30,7 +31,7 @@ public class DrawGame implements Common{
 	 public int[][] cardCoord = new int[7][7]; 
 	 
 	/*主菜单*/
-	public void drawMainMenu(Graphics g, int index, int favorIndex){
+	public void drawMainMenu(SGraphics g, int index, int favorIndex){
 		Image main_bg = Resource.loadImage(Resource.id_main_bg);
 		Image main_menu = Resource.loadImage(Resource.id_main_menu);
 		g.drawImage(main_bg, 0, 0, TopLeft);
@@ -49,7 +50,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*选择地图*/
-	public void drawSelectMapMenu(Graphics g, int index){
+	public void drawSelectMapMenu(SGraphics g, int index){
 		Image main_bg = Resource.loadImage(Resource.id_main_bg);
 		Image map_menu = Resource.loadImage(Resource.id_map_menu);
 		g.drawImage(main_bg, 0, 0, TopLeft);
@@ -61,7 +62,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*地图背景*/
-	public void drawMapBG(Graphics g, Propety[] game_props, Player currPlayer){
+	public void drawMapBG(SGraphics g, Propety[] game_props, Player currPlayer){
 		Image map_bg = Resource.loadImage(Resource.id_map_bg);
 		Image card = Resource.loadImage(Resource.id_card);
 		g.drawImage(map_bg, 0, 0, 0);
@@ -112,7 +113,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*使用卡片在地图上的图标(防御卡, 撤退卡, 地雷卡,隐藏卡, 装甲卡)*/
-	public void drawCardIcon(Graphics g, int propId, int x, int y){
+	public void drawCardIcon(SGraphics g, int propId, int x, int y){
 		Image icon = Resource.loadImage(Resource.id_card_icon);
 		if(propId<=46){
 			g.drawRegion(icon, (propId-44)*icon.getWidth()/5, 0, icon.getWidth()/5, icon.getHeight(), 0, x+13, y, TopLeft);
@@ -125,7 +126,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*游戏成功或失败      isSuccess: 0成功, 1失败*/
-	public void drawSuccessOrFail(Graphics g, int isSuccess, int index){
+	public void drawSuccessOrFail(SGraphics g, int isSuccess, int index){
 		Image card_bg = Resource.loadImage(Resource.id_card_bg);
 		Image over = Resource.loadImage(Resource.id_over);
 		Image over_menu = Resource.loadImage(Resource.id_over_menu);
@@ -150,7 +151,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*卡片分配*/
-	public void drawCardAssign(Graphics g, Propety[] props, Propety[] game_props,  int indexX, int indexY){
+	public void drawCardAssign(SGraphics g, Propety[] props, Propety[] game_props,  int indexX, int indexY){
 		Image card = Resource.loadImage(Resource.id_card);
 		Image card_bg = Resource.loadImage(Resource.id_card_bg);
 		Image card_name = Resource.loadImage(Resource.id_card_name);
@@ -215,7 +216,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*商城*/
-	public void drawShop(Graphics g, int shopX, int shopY, Propety[] props){
+	public void drawShop(SGraphics g, int shopX, int shopY, Propety[] props){
 		Image card = Resource.loadImage(Resource.id_card);
 		Image shop_bg = Resource.loadImage(Resource.id_interface_bg);
 		Image info_bg = Resource.loadImage(Resource.id_info_bg);
@@ -288,7 +289,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*玩家信息*/
-	public void showPlayerInfo(Graphics g, Player[] ais, StateMap sm, Player currPlayer){
+	public void showPlayerInfo(SGraphics g, Player[] ais, StateMap sm, Player currPlayer){
 		
 		Image playerImg = Resource.loadImage(Resource.id_roleFlame);
 		for(int i=0;i<ais.length;i++){
@@ -335,7 +336,7 @@ public class DrawGame implements Common{
 	 * @param nums_attack 攻击方兵数
 	 * @param nums_embattled 被攻击方兵数
 	 */
-	public void drawFighting(Graphics g, int color_attack, 
+	public void drawFighting(SGraphics g, int color_attack, 
 							int color_embattled, 
 							Region region_attack, 
 							Region region_embattled,
@@ -455,7 +456,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*数字转换成图片*/
-	public void drawNum(Graphics g, int num, int x, int y, boolean isShop) {
+	public void drawNum(SGraphics g, int num, int x, int y, boolean isShop) {
 		Image fighting_num;
 		if(!isShop){
 			fighting_num = Resource.loadImage(Resource.id_fighting_num);
@@ -470,7 +471,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*战斗界面上的士兵*/
-	private void drawSolidersFighting(Graphics g, Region region, int color, boolean isAttackRegion){
+	private void drawSolidersFighting(SGraphics g, Region region, int color, boolean isAttackRegion){
 		int count = region.getSoldiers();
 		int x = 0;
 		if(!isAttackRegion){
@@ -585,7 +586,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*地图上的士兵*/
-	public void drawSoldiers(Graphics g, Region r, Influence inf, int coor_x, int coor_y){
+	public void drawSoldiers(SGraphics g, Region r, Influence inf, int coor_x, int coor_y){
 		int count = r.getSoldiers();
 		if(count<=3){
 			id_solider = Resource.getSoliderId(inf.getColor());
@@ -614,7 +615,7 @@ public class DrawGame implements Common{
 	}
 
 	/*游戏排行*/
-	public void drawRanking(Graphics g, GameRanking[] gameRanking){
+	public void drawRanking(SGraphics g, GameRanking[] gameRanking){
 		Image bg = Resource.loadImage(Resource.id_interface_bg);
 		Image rank_info = Resource.loadImage(Resource.id_rank_info);
 		Image ranking = Resource.loadImage(Resource.id_ranking);
@@ -649,7 +650,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*新手指导*/
-	public void drawFreshMan(Graphics g, int index){
+	public void drawFreshMan(SGraphics g, int index){
 		Image freshman = Resource.loadImage(Resource.id_freshman);
 		Image freshman2 = Resource.loadImage(Resource.id_freshman2);
 		if(index==0){
@@ -660,7 +661,7 @@ public class DrawGame implements Common{
 	}
 	
 	/*游戏帮助             80,137 500,315*/
-	public void drawHelp(Graphics g, int index, int pageIndex){
+	public void drawHelp(SGraphics g, int index, int pageIndex){
 		Image help = Resource.loadImage(Resource.id_help);
 		Image updown = Resource.loadImage(Resource.id_updown);
 		g.drawImage(help, 0, 0, TopLeft);

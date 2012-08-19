@@ -1,7 +1,6 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
-
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.key.KeyState;
 import cn.ohyeah.stb.util.RandomValue;
 
@@ -35,7 +34,7 @@ public class StateFighting implements Common{
 		}
 		try {
 			KeyState keyState = engine.getKeyState();
-			Graphics g = engine.getGraphics();
+			SGraphics g = engine.getSGraphics();
 			while (running) {
 				handleFighting(keyState, sm);
 				if (running) {
@@ -67,7 +66,7 @@ public class StateFighting implements Common{
 	}
 
 	
-	private void showFighting(Graphics g, StateMap sm) {
+	private void showFighting(SGraphics g, StateMap sm) {
 		
 		/*÷ÿªÊµÿÕº*/
 		sm.showSelectRegion(g);

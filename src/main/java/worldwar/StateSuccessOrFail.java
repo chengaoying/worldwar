@@ -1,7 +1,6 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
-
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
 
@@ -16,7 +15,7 @@ public class StateSuccessOrFail {
 		running = true;
 		try {
 			KeyState keyState = engine.getKeyState();
-			Graphics g = engine.getGraphics();
+			SGraphics g = engine.getSGraphics();
 			while (running) {
 				handleGameSuccessOrFail(keyState);
 				if (running) {
@@ -47,7 +46,7 @@ public class StateSuccessOrFail {
 		showGame.clearSuccessOrFail();
 	}
 
-	private void showGameSuccessOrFail(Graphics g, int isSuccess) {
+	private void showGameSuccessOrFail(SGraphics g, int isSuccess) {
 		showGame.drawSuccessOrFail(g, isSuccess, index);
 		
 	}

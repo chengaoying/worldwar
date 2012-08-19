@@ -1,7 +1,6 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
-
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
 
@@ -16,7 +15,7 @@ public class StateHelp {
 		running = true;
 		try {
 			KeyState keyState = engine.getKeyState();
-			Graphics g = engine.getGraphics();
+			SGraphics g = engine.getSGraphics();
 			while (running) {
 				handleHelp(keyState);
 				if (running) {
@@ -42,7 +41,7 @@ public class StateHelp {
 		
 	}
 
-	private void showHelp(Graphics g) {
+	private void showHelp(SGraphics g) {
 		showGame.drawHelp(g, index, pageIndex);
 	}
 

@@ -75,13 +75,10 @@ public class DrawGame implements Common{
 					drawNum(g, k+1, 99+(k*54)+Abs_Coords_X, 450+Abs_Coords_Y, true);
 					int color = g.getColor();
 					g.setColor(0Xffffff);
-<<<<<<< HEAD
 					engine.setFont(19);
 					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520+Abs_Coords_X, 448+Abs_Coords_Y, 110, 69);
-=======
 					engine.setFont(12);
 					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
->>>>>>> 13e3344a269e0c927e495e5c1847161835bd1e92
 					engine.setDefaultFont();
 					g.setColor(color);
 				}else{
@@ -102,13 +99,10 @@ public class DrawGame implements Common{
 						drawNum(g, k+3, 224+(k*54)+Abs_Coords_X, 450+Abs_Coords_Y, true);
 						int color = g.getColor();
 						g.setColor(0Xffffff);
-<<<<<<< HEAD
 						engine.setFont(19);
 						TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520+Abs_Coords_X, 448+Abs_Coords_Y, 110, 69);
-=======
 						engine.setFont(15);
 						TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
->>>>>>> 13e3344a269e0c927e495e5c1847161835bd1e92
 						engine.setDefaultFont();
 						g.setColor(color);
 					}else{
@@ -677,13 +671,10 @@ public class DrawGame implements Common{
 		g.drawRegion(updown, pageIndex==0?0:updown.getWidth()/2, 0, updown.getWidth()/2, updown.getHeight()/2, 0, 110+Abs_Coords_X, 470+Abs_Coords_Y, TopLeft);
 		g.drawRegion(updown, pageIndex==1?0:updown.getWidth()/2, updown.getHeight()/2, updown.getWidth()/2, updown.getHeight()/2, 0, 255+Abs_Coords_X, 470+Abs_Coords_Y, TopLeft);
 		engine.setFont(19);
-<<<<<<< HEAD
 		TextView.showMultiLineText(g, Resource.helpInfo[index], 10+Abs_Coords_X, 80+Abs_Coords_Y, 137, 480, 315);
-=======
 		int color =  g.getColor();
 		g.setColor(0XFFFFFF);
 		TextView.showMultiLineText(g, Resource.helpInfo[index], 10, 80, 137, 480, 315);
->>>>>>> 13e3344a269e0c927e495e5c1847161835bd1e92
 		engine.setDefaultFont();
 		g.setColor(color);
 	}

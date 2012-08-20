@@ -77,7 +77,7 @@ public class DrawGame implements Common{
 					drawNum(g, k+1, 99+(k*54), 450, true);
 					int color = g.getColor();
 					g.setColor(0Xffffff);
-					engine.setFont(12);
+					engine.setFont(fontSize);
 					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
 					engine.setDefaultFont();
 					g.setColor(color);
@@ -99,7 +99,7 @@ public class DrawGame implements Common{
 						drawNum(g, k+3, 224+(k*54), 450, true);
 						int color = g.getColor();
 						g.setColor(0Xffffff);
-						engine.setFont(15);
+						engine.setFont(fontSize);
 						TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
 						engine.setDefaultFont();
 						g.setColor(color);
@@ -166,7 +166,7 @@ public class DrawGame implements Common{
 		g.drawImage(card_info, mapx+265, mapy+53, TopLeft);
 		
 		if(indexX<3){
-			engine.setFont(15);
+			engine.setFont(fontSize);
 			g.setColor(0Xffffff);
 			TextView.showMultiLineText(g, Resource.info2[getIndex(indexX, indexY)], 5, 387, 172, 95, 125);
 			engine.setDefaultFont();
@@ -269,7 +269,7 @@ public class DrawGame implements Common{
 			}
 		}
 		if(shopY<3){
-			engine.setFont(fontSize);
+			engine.setFont(19);
 			g.setColor(0Xffffff);
 			TextView.showMultiLineText(g, Resource.info[getIndex(shopX, shopY)], 5, 56, 385, 522, 55);
 			engine.setDefaultFont();
@@ -629,7 +629,7 @@ public class DrawGame implements Common{
 		g.drawImage(rank_tag, 263, 27, TopLeft);
 		g.drawImage(return_button, 435, 470, TopLeft);
 		
-		engine.setFont(fontSize);
+		engine.setFont(19);
 		String ownRank="°ñÉÏÎÞÃû!";
 		int color = g.getColor();
 		g.setColor(0Xffffff);
@@ -668,7 +668,7 @@ public class DrawGame implements Common{
 		g.drawImage(help, 0, 0, TopLeft);
 		g.drawRegion(updown, pageIndex==0?0:updown.getWidth()/2, 0, updown.getWidth()/2, updown.getHeight()/2, 0, 110, 470, TopLeft);
 		g.drawRegion(updown, pageIndex==1?0:updown.getWidth()/2, updown.getHeight()/2, updown.getWidth()/2, updown.getHeight()/2, 0, 255, 470, TopLeft);
-		engine.setFont(fontSize);
+		engine.setFont(19);
 		int color =  g.getColor();
 		g.setColor(0XFFFFFF);
 		TextView.showMultiLineText(g, Resource.helpInfo[index], 10, 80, 137, 480, 315);

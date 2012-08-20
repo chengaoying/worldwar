@@ -29,6 +29,7 @@ public class DrawGame implements Common{
 	 private int index, flag, interval=1;
 	 private int mapy;
 	 public int[][] cardCoord = new int[7][7]; 
+	 private int fontSize = 14;
 	 
 	/*主菜单*/
 	public void drawMainMenu(SGraphics g, int index, int favorIndex){
@@ -202,7 +203,7 @@ public class DrawGame implements Common{
 					drawNum(g, k+3, 224+(k*54), 450, true);
 					int color = g.getColor();
 					g.setColor(0Xffffff);
-					engine.setFont(19);
+					engine.setFont(fontSize);
 					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
 					engine.setDefaultFont();
 					g.setColor(color);
@@ -268,7 +269,7 @@ public class DrawGame implements Common{
 			}
 		}
 		if(shopY<3){
-			engine.setFont(19);
+			engine.setFont(fontSize);
 			g.setColor(0Xffffff);
 			TextView.showMultiLineText(g, Resource.info[getIndex(shopX, shopY)], 5, 56, 385, 522, 55);
 			engine.setDefaultFont();
@@ -628,7 +629,7 @@ public class DrawGame implements Common{
 		g.drawImage(rank_tag, 263, 27, TopLeft);
 		g.drawImage(return_button, 435, 470, TopLeft);
 		
-		engine.setFont(19);
+		engine.setFont(fontSize);
 		String ownRank="榜上无名!";
 		int color = g.getColor();
 		g.setColor(0Xffffff);
@@ -667,7 +668,7 @@ public class DrawGame implements Common{
 		g.drawImage(help, 0, 0, TopLeft);
 		g.drawRegion(updown, pageIndex==0?0:updown.getWidth()/2, 0, updown.getWidth()/2, updown.getHeight()/2, 0, 110, 470, TopLeft);
 		g.drawRegion(updown, pageIndex==1?0:updown.getWidth()/2, updown.getHeight()/2, updown.getWidth()/2, updown.getHeight()/2, 0, 255, 470, TopLeft);
-		engine.setFont(19);
+		engine.setFont(fontSize);
 		int color =  g.getColor();
 		g.setColor(0XFFFFFF);
 		TextView.showMultiLineText(g, Resource.helpInfo[index], 10, 80, 137, 480, 315);

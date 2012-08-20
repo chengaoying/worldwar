@@ -51,5 +51,5 @@ public interface Common {
 	public static final int REGION_SELECTED = 1;		/*选中*/
 	public static final int REGION_CHOICE = 0;			/*选择*/
 	
-	 public static final short Abs_Coords_X = 35, Abs_Coords_Y = 20; //鼎亿同州盒子起点
+	 public static final short Abs_Coords_X = 0, Abs_Coords_Y = 0; //鼎亿同州盒子起点
 }

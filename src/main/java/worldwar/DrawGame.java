@@ -77,8 +77,8 @@ public class DrawGame implements Common{
 					g.setColor(0Xffffff);
 					engine.setFont(19);
 					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520+Abs_Coords_X, 448+Abs_Coords_Y, 110, 69);
-					engine.setFont(12);
-					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
+				/*	engine.setFont(12);
+					TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);*/
 					engine.setDefaultFont();
 					g.setColor(color);
 				}else{
@@ -101,8 +101,8 @@ public class DrawGame implements Common{
 						g.setColor(0Xffffff);
 						engine.setFont(19);
 						TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520+Abs_Coords_X, 448+Abs_Coords_Y, 110, 69);
-						engine.setFont(15);
-						TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);
+						/*engine.setFont(15);
+						TextView.showMultiLineText(g, Resource.info2[game_props[i].getId()], 5, 520, 448, 110, 69);*/
 						engine.setDefaultFont();
 						g.setColor(color);
 					}else{

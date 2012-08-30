@@ -1,8 +1,8 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.key.KeyState;
 
 public class StateExplosion implements Common{
@@ -17,7 +17,7 @@ public class StateExplosion implements Common{
 		running = true;
 		try {
 			KeyState keyState = engine.getKeyState();
-			Graphics g = engine.getGraphics();
+			SGraphics g = engine.getSGraphics();
 			while (running) {
 				handleExplosion(keyState, sm);
 				if (running) {
@@ -43,7 +43,7 @@ public class StateExplosion implements Common{
 		
 	}
 
-	private void showExplosion(Graphics g, Region r, StateMap sm) {
+	private void showExplosion(SGraphics g, Region r, StateMap sm) {
 		
 		/*÷ÿªÊµÿÕº*/
 		sm.showSelectRegion(g);

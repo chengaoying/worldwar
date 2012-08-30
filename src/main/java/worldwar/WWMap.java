@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.microedition.lcdui.Font;
-import javax.microedition.lcdui.Graphics;
+
+import cn.ohyeah.stb.game.SGraphics;
 
 public class WWMap extends Map implements Common{
 	
@@ -32,7 +33,7 @@ public class WWMap extends Map implements Common{
 			}
 	    }
 	 
-	 public void drawMap(Graphics g, 
+	 public void drawMap(SGraphics g, 
 			 Player[] ais, 
 			 Player currPlayer, 
 			 Propety[] game_props, 

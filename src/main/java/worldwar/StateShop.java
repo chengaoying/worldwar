@@ -1,7 +1,6 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
-
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.game.StateRecharge;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
@@ -21,7 +20,7 @@ public class StateShop {
 		running = true;
 		try {
 			KeyState keyState = engine.getKeyState();
-			Graphics g = engine.getGraphics();
+			SGraphics g = engine.getSGraphics();
 			while (running) {
 				handleShop(keyState);
 				if (running) {
@@ -47,7 +46,7 @@ public class StateShop {
 		
 	}
 
-	private void showShop(Graphics g, Propety[] props) {
+	private void showShop(SGraphics g, Propety[] props) {
 		showGame.drawShop(g, shopX, shopY, props);
 	}
 

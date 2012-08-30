@@ -1,7 +1,6 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
-
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
 import cn.ohyeah.stb.res.UIResource;
@@ -27,7 +26,7 @@ public class StateAssignCard {
 		running = true;
 		try {
 			KeyState keyState = engine.getKeyState();
-			Graphics g = engine.getGraphics();
+			SGraphics g = engine.getSGraphics();
 			while (running) {
 				handleAssignCard(keyState, sm);
 				if (running) {
@@ -53,7 +52,7 @@ public class StateAssignCard {
 		
 	}
 
-	private void showAssignCard(Graphics g, 
+	private void showAssignCard(SGraphics g, 
 			WWMap map, 
 			Player[] ais, 
 			Player currPlayer, 

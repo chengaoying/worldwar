@@ -1,7 +1,7 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
 
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
 
@@ -16,7 +16,7 @@ public class StateFreshMan {
 		running = true;
 		try {
 			KeyState keyState = engine.getKeyState();
-			Graphics g = engine.getGraphics();
+			SGraphics g = engine.getSGraphics();
 			while (running) {
 				handleFreshMan(keyState);
 				if (running) {
@@ -42,7 +42,7 @@ public class StateFreshMan {
 		
 	}
 
-	private void showFreshMan(Graphics g) {
+	private void showFreshMan(SGraphics g) {
 		showGame.drawFreshMan(g, index);
 	}
 

@@ -1,11 +1,11 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
 import javax.microedition.midlet.MIDlet;
 
 import cn.ohyeah.itvgame.model.GameRanking;
 import cn.ohyeah.stb.game.Configurations;
 import cn.ohyeah.stb.game.GameCanvasEngine;
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.game.ServiceWrapper;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.res.UIResource;
@@ -85,7 +85,7 @@ public class WorldWarEngine extends GameCanvasEngine implements Common{
 		
 	}
 
-	private void showPlaying(Graphics g) {
+	private void showPlaying(SGraphics g) {
 		tm.show(g);
 	}
 
@@ -94,7 +94,7 @@ public class WorldWarEngine extends GameCanvasEngine implements Common{
 		tm.handle(keyState);
 	}
 
-	private void showRanking(Graphics g) {
+	private void showRanking(SGraphics g) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -109,7 +109,7 @@ public class WorldWarEngine extends GameCanvasEngine implements Common{
 		
 	}
 
-	private void showHelp(Graphics g) {
+	private void showHelp(SGraphics g) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -181,7 +181,7 @@ public class WorldWarEngine extends GameCanvasEngine implements Common{
 		}
 	}
 	
-	private void showGameMenu(Graphics g) {
+	private void showGameMenu(SGraphics g) {
 		showGame.drawMainMenu(g, mainIndex, favorIndex);
 	}
 	

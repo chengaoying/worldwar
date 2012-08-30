@@ -3,8 +3,7 @@ package worldwar;
 import java.io.InputStream;
 import java.io.IOException;
 
-import javax.microedition.lcdui.Graphics;
-
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.util.IOUtil;
 
 public class Map {
@@ -275,7 +274,7 @@ public class Map {
 		}
     }
     
-    protected void fillHexagon(Graphics g, int x, int y)
+    protected void fillHexagon(SGraphics g, int x, int y)
     {
         g.fillTriangle(x, y + sideYMappingLen, 
         		x + sideXMappingLen2, y + sideYMappingLen, 
@@ -287,7 +286,7 @@ public class Map {
 
     }
 
-    protected void drawHexagon(Graphics g, int x, int y)
+    protected void drawHexagon(SGraphics g, int x, int y)
     {
         /*上面两条斜边*/
         g.drawLine(x, y + sideYMappingLen, x + sideXMappingLen, y);
@@ -302,7 +301,7 @@ public class Map {
         g.drawLine(x + sideXMappingLen2, y + sideYMappingLen, x + sideXMappingLen2, y + sideYMappingLen + sideLen);
     }
     
-    protected void drawRegionBorder(Graphics g, int x, int y, int drawFlag)
+    protected void drawRegionBorder(SGraphics g, int x, int y, int drawFlag)
     {
         //左上角的斜线
         if ((drawFlag&1) != 0)
@@ -336,17 +335,19 @@ public class Map {
         }
     }
 
-    public void drawRegionBorder(Graphics g, int color)
+    public void drawRegionBorder(SGraphics g, int color)
     {
     	g.setColor(color);
         int sx = x, sy = y;
+        boolean needXOffset = false;
         for (int r = 0; r < rows; ++r)
         {
             sx = x;
-            if (r % 2 != 0)
+            if (needXOffset)
             {
                 sx += sideXMappingLen;
             }
+            needXOffset = !needXOffset;
             for (int c = 0; c < cols; ++c)
             {
                 if (tiles[r][c] >= 0)
@@ -394,17 +395,19 @@ public class Map {
     	return null;
     }
     
-    public void drawRegion(Graphics g, Region region, int color)
+    public void drawRegion(SGraphics g, Region region, int color)
     {
     	int regionId = region.getId();
     	int sx = x, sy = y;
+    	boolean needXOffset = false;
         for (int r = 0; r < rows; ++r)
         {
             sx = x;
-            if (r % 2 != 0)
+            if (needXOffset)
             {
                 sx += sideXMappingLen;
             }
+            needXOffset = !needXOffset;
             for (int c = 0; c < cols; ++c)
             {
             	if (tiles[r][c] >= 0 && tiles[r][c] == regionId)
@@ -420,16 +423,18 @@ public class Map {
         }
     }
     
-    public void drawInfluence(Graphics g, Influence inf, int color)
+    public void drawInfluence(SGraphics g, Influence inf, int color)
     {
     	int sx = x, sy = y;
+    	boolean needXOffset = false;
         for (int r = 0; r < rows; ++r)
         {
             sx = x;
-            if (r % 2 != 0)
+            if (needXOffset)
             {
                 sx += sideXMappingLen;
             }
+            needXOffset = !needXOffset;
             for (int c = 0; c < cols; ++c)
             {
             	if (tiles[r][c] >= 0 && getInfluence(r, c) == inf)
@@ -445,16 +450,18 @@ public class Map {
         }
     }
     
-    public void drawMap(Graphics g)
+    public void drawMap(SGraphics g)
     {
         int sx = x, sy = y;
+        boolean needXOffset = false;
         for (int r = 0; r < rows; ++r)
         {
             sx = x;
-            if (r % 2 != 0)
+            if (needXOffset)
             {
                 sx += sideXMappingLen;
             }
+            needXOffset = !needXOffset;
             for (int c = 0; c < cols; ++c)
             {
             	if (tiles[r][c] >= 0)

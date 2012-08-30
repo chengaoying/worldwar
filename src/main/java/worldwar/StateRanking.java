@@ -1,8 +1,7 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
-
 import cn.ohyeah.itvgame.model.GameRanking;
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
 
@@ -17,7 +16,7 @@ public class StateRanking {
 		running = true;
 		try {
 			KeyState keyState = engine.getKeyState();
-			Graphics g = engine.getGraphics();
+			SGraphics g = engine.getSGraphics();
 			while (running) {
 				handleRanking(keyState);
 				if (running) {
@@ -43,7 +42,7 @@ public class StateRanking {
 		
 	}
 
-	private void showRanking(Graphics g, GameRanking[] gameRanking) {
+	private void showRanking(SGraphics g, GameRanking[] gameRanking) {
 		showGame.drawRanking(g, gameRanking);
 	}
 

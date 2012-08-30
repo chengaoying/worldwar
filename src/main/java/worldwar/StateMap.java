@@ -1,8 +1,7 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
-
 import cn.ohyeah.itvgame.model.GameAttainment;
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.game.ServiceWrapper;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
@@ -33,9 +32,10 @@ public class StateMap implements Common {
 	public boolean startGame;
 	private Player currPlayer;
 	private int playCount;
-	//public int regionSelectedOrChoice = 0;
-	
-	//private String[] mapPaths ={"/map/1-6-1.wwm"};
+
+	// public int regionSelectedOrChoice = 0;
+
+	// private String[] mapPaths ={"/map/1-6-1.wwm"};
 
 	public StateMap(WorldWarEngine e) {
 		this.engine = e;
@@ -68,7 +68,7 @@ public class StateMap implements Common {
 				count++;
 			}
 		}
-		if(count==0){
+		if (count == 0) {
 			return null;
 		}
 		influenceRegions = new Region[count];
@@ -89,26 +89,26 @@ public class StateMap implements Common {
 	public boolean isCompareRegion(Region r, Region r2) {
 		return r.compareSoldiers(r2) >= 0;
 	}
-	
-	/*查找某区域所属玩家*/
-	public Player serachAIByRegion(Region r){
+
+	/* 查找某区域所属玩家 */
+	public Player serachAIByRegion(Region r) {
 		Player[] players = activePlayers();
-		for(int i=0;i<players.length;i++){
-			if(r.getInfluenceId()==(short)players[i].getInfluenceId()){
+		for (int i = 0; i < players.length; i++) {
+			if (r.getInfluenceId() == (short) players[i].getInfluenceId()) {
 				return players[i];
 			}
 		}
 		return null;
 	}
-	
-	/*查找某势力所属玩家*/
-	public Player serachAIByInfluence(Influence inf){
+
+	/* 查找某势力所属玩家 */
+	public Player serachAIByInfluence(Influence inf) {
 		Player[] players = activePlayers();
-		if(players.length<=1 || inf==null){
+		if (players.length <= 1 || inf == null) {
 			return null;
 		}
-		for(int i=0;i<players.length;i++){
-			if(inf.getId()==(short)players[i].getInfluenceId()){
+		for (int i = 0; i < players.length; i++) {
+			if (inf.getId() == (short) players[i].getInfluenceId()) {
 				return players[i];
 			}
 		}
@@ -192,54 +192,59 @@ public class StateMap implements Common {
 		showGame.clearFighting();
 	}
 
-	/*查找没有使用防御卡的领地*/
-	private Region serachNoPropRegion(Player ai){
+	/* 查找没有使用防御卡的领地 */
+	private Region serachNoPropRegion(Player ai) {
 		Region[] regions = serachRegions(map.getInfluence(ai.getInfluenceId()));
-		if(regions!=null){
-			for(int i=0;i<regions.length;i++){
-				if(regions[i].getPropId()==0){
+		if (regions != null) {
+			for (int i = 0; i < regions.length; i++) {
+				if (regions[i].getPropId() == 0) {
 					return regions[i];
 				}
 			}
 		}
 		return null;
 	}
-	/*查找没有使用装甲卡的领地*/
-	private Region serachNoProp2Region(Player ai){
+
+	/* 查找没有使用装甲卡的领地 */
+	private Region serachNoProp2Region(Player ai) {
 		Region[] regions = serachRegions(map.getInfluence(ai.getInfluenceId()));
-		if(regions!=null){
-			for(int i=0;i<regions.length;i++){
-				if(regions[i].getPropId()==0){
+		if (regions != null) {
+			for (int i = 0; i < regions.length; i++) {
+				if (regions[i].getPropId() == 0) {
 					return regions[i];
 				}
 			}
 		}
 		return null;
 	}
-	
-	/*判断道具能否使用*/
-	private boolean isUseProp(Player ai){
-		if(showGame.cardCoord[0][1]>=DEFENSE_CARD && showGame.cardCoord[0][1]<=LANDMINE_CARD && serachNoPropRegion(ai)!=null){
+
+	/* 判断道具能否使用 */
+	private boolean isUseProp(Player ai) {
+		if (showGame.cardCoord[0][1] >= DEFENSE_CARD
+				&& showGame.cardCoord[0][1] <= LANDMINE_CARD
+				&& serachNoPropRegion(ai) != null) {
 			return true;
 		}
-		if(showGame.cardCoord[0][1]==ARMOURED_CARD && serachNoProp2Region(ai)!=null){
+		if (showGame.cardCoord[0][1] == ARMOURED_CARD
+				&& serachNoProp2Region(ai) != null) {
 			return true;
 		}
-		if(showGame.cardCoord[0][1]==BOMBARD_CARD || showGame.cardCoord[0][1]==AIRATTACK_CARD){
+		if (showGame.cardCoord[0][1] == BOMBARD_CARD
+				|| showGame.cardCoord[0][1] == AIRATTACK_CARD) {
 			return true;
 		}
 		return false;
 	}
-	
-	/*游戏成功或失败*/
-	private void gameFailOrSuccess(){
+
+	/* 游戏成功或失败 */
+	private void gameFailOrSuccess() {
 		/* 游戏失败 */
 		if (isDestroyed(map.getInfluence(player.getInfluenceId()))) {
 			player.setState(GAME_OVER);
 			gameOver(1);
 			pm.sysProps();
-		}else{ 		//游戏成功
-			if(activePlayers().length<=1){
+		} else { // 游戏成功
+			if (activePlayers().length <= 1) {
 				int scores = rankListScores(player);
 				ServiceWrapper sw = engine.getServiceWrapper();
 				GameAttainment ga = sw.readAttainment(engine.attainmentId);
@@ -252,22 +257,24 @@ public class StateMap implements Common {
 			}
 		}
 	}
-	
-	/*AILogic*/
-	private void AILogic(){
+
+	/* AILogic */
+	private void AILogic() {
 		Player[] ai = activePlayers();
 		for (int i = 0; i < ai.length; i++) {
 			int count = 0;
-			if (ai[i].getState() == STATUS_ATTACK && ai[i].getId() != player.getId()) {
+			if (ai[i].getState() == STATUS_ATTACK
+					&& ai[i].getId() != player.getId()) {
 
 				/* 使用道具 */
-				if(serachPropsAI(ai[i]) && ai[i].getState()!=GAME_OVER){
+				if (serachPropsAI(ai[i]) && ai[i].getState() != GAME_OVER) {
 					showGame.cardCoord[0][0] = 1;
 				}
-				if (serachPropsAI(ai[i]) && ai[i].getState()!=GAME_OVER && isUseProp(ai[i])) {
+				if (serachPropsAI(ai[i]) && ai[i].getState() != GAME_OVER
+						&& isUseProp(ai[i])) {
 					AIUseProps(ai[i]);
 				} else { // 开始进攻
-					if(timePass(1500)){
+					if (timePass(1500)) {
 						System.out.println("AI[" + i + "]开始进攻:");
 						AIattack(ai[i]);
 					}
@@ -276,28 +283,28 @@ public class StateMap implements Common {
 				if (AIAttackIsOver(ai[i])) {
 					System.out.println("攻击结束");
 					ai[i].setState(STATUS_WAIT);
-					/*增长士兵*/
+					/* 增长士兵 */
 					SoldiersGrowth(map.getInfluence(ai[i].getInfluenceId()));
 					StateSoldiersGrowth ssg = new StateSoldiersGrowth();
 					ssg.processSoldiersGrowth(ai[i], this);
 					SoldiersGrowth2(map.getInfluence(ai[i].getInfluenceId()));
-					
+
 					count++;
-					int m=0;
+					int m = 0;
 					if (i < ai.length - 1) {
-						m = i+1;
+						m = i + 1;
 					}
 					ai[m].setState(STATUS_ATTACK);
-					if(ai[m].getId()!=player.getId()){
+					if (ai[m].getId() != player.getId()) {
 						System.out.println("AI随机分配道具:");
 						pm.randomAssignProps(ai[m]);
-					}else{
+					} else {
 						System.out.println("玩家攻击开始");
 						player.setRounds(player.getRounds() + 1);
-						showGame.cardCoord[0][0]=0;
-						player.setInvestigateCard(false);  //回合结束侦查卡效果消失
+						showGame.cardCoord[0][0] = 0;
+						player.setInvestigateCard(false); // 回合结束侦查卡效果消失
 						player.setUsePropTimes(0);
-						//startGame = false;
+						// startGame = false;
 						pm.randomAssignProps(player); // 随机分配道具
 						/* 清空隐藏卡 */
 						delHiddenCard(player);
@@ -306,64 +313,59 @@ public class StateMap implements Common {
 			}
 		}
 	}
-	
+
 	private void handleSelectRegion(KeyState key) {
 
-		StateAssignCard sc = new StateAssignCard();
 		if (!startGame) {
+			StateAssignCard sc = new StateAssignCard();
 			pm.randomAssignProps(player); // 随机分配道具
 			sc.processAssignCard(map, activePlayers(), currPlayer,
 					pm.card_assign_props, pm.game_props, region, this);
 		}
 
 		AILogic();
-		gameFailOrSuccess(); 
-		
+		gameFailOrSuccess();
+
 		if (key.containsAndRemove(KeyCode.UP)) {
 			if (player.getState() == STATUS_ATTACK) {
 				region = map.moveUp(region);
 			}
-		}
-		if (key.containsAndRemove(KeyCode.DOWN)) {
+		} else if (key.containsAndRemove(KeyCode.DOWN)) {
 			if (player.getState() == STATUS_ATTACK) {
 				region = map.moveDown(region);
 			}
-		}
-		if (key.containsAndRemove(KeyCode.LEFT)) {
+		} else if (key.containsAndRemove(KeyCode.LEFT)) {
 			if (player.getState() == STATUS_ATTACK) {
 				region = map.moveLeft(region);
 			}
-		}
-		if (key.containsAndRemove(KeyCode.RIGHT)) {
+		} else if (key.containsAndRemove(KeyCode.RIGHT)) {
 			if (player.getState() == STATUS_ATTACK) {
 				region = map.moveRight(region);
 			}
-		}
-		if (key.containsAndRemove(KeyCode.NUM9)) {
+		} else if (key.containsAndRemove(KeyCode.NUM9)) {
 			if (player.getState() == STATUS_ATTACK) {
 				player.setState(STATUS_WAIT);
-				
+
 				SoldiersGrowth(map.getInfluence(player.getInfluenceId()));
 				StateSoldiersGrowth ssg = new StateSoldiersGrowth();
 				ssg.processSoldiersGrowth(player, this);
 				SoldiersGrowth2(map.getInfluence(player.getInfluenceId()));
-				
+
 				Player[] ai = activePlayers();
-				if(player.getId()<ai.length-1){
-					ai[player.getId()+1].setState(STATUS_ATTACK);
-					pm.randomAssignProps(ai[player.getId()+1]);
-				}else{
+				if (player.getId() < ai.length - 1) {
+					ai[player.getId() + 1].setState(STATUS_ATTACK);
+					pm.randomAssignProps(ai[player.getId() + 1]);
+				} else {
 					ai[0].setState(STATUS_ATTACK);
 					pm.randomAssignProps(ai[0]);
 				}
 			}
 
-		}
-		if (key.containsAndRemove(KeyCode.OK)) {
+		} else if (key.containsAndRemove(KeyCode.OK)) {
 			attackOrUseCard();
 		}
 
-		if (key.containsAndRemove(KeyCode.NUM1)
+		else if (key.containsAndRemove(KeyCode.NUM1)
 				&& player.getState() == STATUS_ATTACK) {
 			if (pm.getGamePropNums(currPlayer.getProps()) > 0) {
 				if (showGame.cardCoord[0][0] == 1) {
@@ -373,8 +375,7 @@ public class StateMap implements Common {
 					showGame.cardCoord[0][0] = 1;
 				}
 			}
-		}
-		if (key.containsAndRemove(KeyCode.NUM2)
+		} else if (key.containsAndRemove(KeyCode.NUM2)
 				&& player.getState() == STATUS_ATTACK) {
 			if (pm.getGamePropNums(currPlayer.getProps()) > 0) {
 				if (showGame.cardCoord[1][0] == 1) {
@@ -384,8 +385,7 @@ public class StateMap implements Common {
 					showGame.cardCoord[1][0] = 1;
 				}
 			}
-		}
-		if (key.containsAndRemove(KeyCode.NUM3)
+		} else if (key.containsAndRemove(KeyCode.NUM3)
 				&& player.getState() == STATUS_ATTACK) {
 			if (pm.getGamePropNums(pm.game_props) > 0) {
 				if (showGame.cardCoord[2][0] == 1) {
@@ -395,8 +395,7 @@ public class StateMap implements Common {
 					showGame.cardCoord[2][0] = 1;
 				}
 			}
-		}
-		if (key.containsAndRemove(KeyCode.NUM4)
+		} else if (key.containsAndRemove(KeyCode.NUM4)
 				&& player.getState() == STATUS_ATTACK) {
 			if (pm.getGamePropNums(pm.game_props) > 1) {
 				if (showGame.cardCoord[3][0] == 1) {
@@ -406,8 +405,7 @@ public class StateMap implements Common {
 					showGame.cardCoord[3][0] = 1;
 				}
 			}
-		}
-		if (key.containsAndRemove(KeyCode.NUM5)
+		} else if (key.containsAndRemove(KeyCode.NUM5)
 				&& player.getState() == STATUS_ATTACK) {
 			if (pm.getGamePropNums(pm.game_props) > 2) {
 				if (showGame.cardCoord[4][0] == 1) {
@@ -417,8 +415,7 @@ public class StateMap implements Common {
 					showGame.cardCoord[4][0] = 1;
 				}
 			}
-		}
-		if (key.containsAndRemove(KeyCode.NUM6)
+		} else if (key.containsAndRemove(KeyCode.NUM6)
 				&& player.getState() == STATUS_ATTACK) {
 			if (pm.getGamePropNums(pm.game_props) > 3) {
 				if (showGame.cardCoord[5][0] == 1) {
@@ -428,8 +425,7 @@ public class StateMap implements Common {
 					showGame.cardCoord[5][0] = 1;
 				}
 			}
-		}
-		if (key.containsAndRemove(KeyCode.NUM7)
+		} else if (key.containsAndRemove(KeyCode.NUM7)
 				&& player.getState() == STATUS_ATTACK) {
 			if (pm.getGamePropNums(pm.game_props) > 4) {
 				if (showGame.cardCoord[6][0] == 1) {
@@ -439,12 +435,10 @@ public class StateMap implements Common {
 					showGame.cardCoord[6][0] = 1;
 				}
 			}
-		}
-		if (key.containsAndRemove(KeyCode.NUM8)){
+		} else if (key.containsAndRemove(KeyCode.NUM8)) {
 			StateHelp sh = new StateHelp();
 			sh.processHelp();
-		}
-		if (key.containsAndRemove(KeyCode.NUM0)) {
+		} else if (key.containsAndRemove(KeyCode.NUM0)) {
 			PopupConfirm pc = UIResource.getInstance()
 					.buildDefaultPopupConfirm();
 			pc.setText("确定要退出游戏吗?");
@@ -462,19 +456,14 @@ public class StateMap implements Common {
 			}
 		}
 	}
-	
+
 	/* 判断是否有装甲卡 */
-	/*private boolean isArmouredCard(Player p) {
-		Influence inf = map.getInfluence(p.getInfluenceId());
-		Region[] regions = serachRegions(inf);
-		for (int i = 0; i < regions.length; i++) {
-			if (regions[i].getPropId2() != 0) {
-				return true;
-			}
-		}
-		return false;
-	}*/
-	
+	/*
+	 * private boolean isArmouredCard(Player p) { Influence inf =
+	 * map.getInfluence(p.getInfluenceId()); Region[] regions =
+	 * serachRegions(inf); for (int i = 0; i < regions.length; i++) { if
+	 * (regions[i].getPropId2() != 0) { return true; } } return false; }
+	 */
 
 	/* 清空装甲卡 */
 	private void delArmouredCard(Player p) {
@@ -487,13 +476,12 @@ public class StateMap implements Common {
 			}
 		}
 	}
-	
 
 	/* 清空隐藏卡 */
 	private void delHiddenCard(Player p) {
 		Influence inf = map.getInfluence(p.getInfluenceId());
 		Region[] regions = serachRegions(inf);
-		if(regions!=null){
+		if (regions != null) {
 			for (int i = 0; i < regions.length; i++) {
 				if (regions[i].getPropId() == HIDDEN_CARD) {
 					System.out.println("隐藏卡被清除");
@@ -502,10 +490,10 @@ public class StateMap implements Common {
 			}
 		}
 	}
-	
 
 	/* 攻击或者使用卡片 */
 	int _type, _i;
+
 	private void attackOrUseCard() {
 		boolean flag = false;
 		for (int i = 0; i < showGame.cardCoord.length; i++) {
@@ -513,16 +501,17 @@ public class StateMap implements Common {
 				if (showGame.cardCoord[i][1] == ARMOURED_CARD) {
 					delArmouredCard(player);
 				}
-				if(player.getUsePropTimes() < USE_CARD_TIMES){
+				if (player.getUsePropTimes() < USE_CARD_TIMES) {
 					if (i < 2) { // 随机卡片
 						useCard(showGame.cardCoord[i][1], i, 0, player);
 						flag = true;
-					} else if(i>=2 && i<7) {
+					} else if (i >= 2 && i < 7) {
 						useCard(showGame.cardCoord[i][1], i, 1, player);
 						flag = true;
 					}
-				}else{
-					PopupText pt = UIResource.getInstance().buildDefaultPopupText();
+				} else {
+					PopupText pt = UIResource.getInstance()
+							.buildDefaultPopupText();
 					pt.setText("一个回合只能使用三张卡片!");
 					pt.popup();
 				}
@@ -548,13 +537,14 @@ public class StateMap implements Common {
 				}
 				if (isSelectedAttack && isSelectedEmbattled) {
 					StateFighting sf = new StateFighting();
-					int i = sf.processFighting(region_attack, region_embattled, this);
+					int i = sf.processFighting(region_attack, region_embattled,
+							this);
 					initRegion();
 					StateExplosion se = new StateExplosion();
-					if(i==1){
+					if (i == 1) {
 						se.processSoldiersGrowth(region_embattled, this);
 					}
-					if(i==-1){
+					if (i == -1) {
 						se.processSoldiersGrowth(region_attack, this);
 					}
 
@@ -564,25 +554,26 @@ public class StateMap implements Common {
 					}
 
 					// 装甲卡使用之后才清除
-					if (region_attack.getPropId2()!=0) {
+					if (region_attack.getPropId2() != 0) {
 						System.out.println("使用了装甲卡");
 						region_attack.setPropId2(0);
 
 					}
-					/*if (isArmouredCard(player)) {
-						System.out.println("使用了装甲卡");
-						player.setUsePropTimes(player.getUsePropTimes()+1);
-						updateProps(showGame.cardCoord[_i][1], _type, player);
-						delArmouredCard(player);
-					}*/
+					/*
+					 * if (isArmouredCard(player)) {
+					 * System.out.println("使用了装甲卡");
+					 * player.setUsePropTimes(player.getUsePropTimes()+1);
+					 * updateProps(showGame.cardCoord[_i][1], _type, player);
+					 * delArmouredCard(player); }
+					 */
 				}
 			}
 		}
 	}
-	
-	/*所有区域都设为未选中状态*/
-	private void initRegion(){
-		for(int i=0;i<map.getRegions().length;i++){
+
+	/* 所有区域都设为未选中状态 */
+	private void initRegion() {
+		for (int i = 0; i < map.getRegions().length; i++) {
 			map.getRegions()[i].setSelected(false);
 		}
 	}
@@ -601,10 +592,14 @@ public class StateMap implements Common {
 
 	/**
 	 * 使用道具
-	 * @param propId 道具ID
+	 * 
+	 * @param propId
+	 *            道具ID
 	 * @param i
-	 * @param flag 攻击和使用道具的标志
-	 * @param type 0,随机道具 1,购买的道具
+	 * @param flag
+	 *            攻击和使用道具的标志
+	 * @param type
+	 *            0,随机道具 1,购买的道具
 	 */
 	private void useCard(int propId, int i, int type, Player p) {
 		switch (propId) {
@@ -614,7 +609,7 @@ public class StateMap implements Common {
 				updateProps(propId, type, p);
 				region.setPropId(propId);
 				showGame.cardCoord[i][0] = 0;
-				p.setUsePropTimes(p.getUsePropTimes()+1);
+				p.setUsePropTimes(p.getUsePropTimes() + 1);
 			}
 			break;
 		case RETREAT_CARD: // 撤退卡
@@ -623,7 +618,7 @@ public class StateMap implements Common {
 				updateProps(propId, type, p);
 				region.setPropId(propId);
 				showGame.cardCoord[i][0] = 0;
-				p.setUsePropTimes(p.getUsePropTimes()+1);
+				p.setUsePropTimes(p.getUsePropTimes() + 1);
 			}
 			break;
 		case LANDMINE_CARD: // 地雷卡
@@ -632,17 +627,21 @@ public class StateMap implements Common {
 				updateProps(propId, type, p);
 				region.setPropId(propId);
 				showGame.cardCoord[i][0] = 0;
-				p.setUsePropTimes(p.getUsePropTimes()+1);
+				p.setUsePropTimes(p.getUsePropTimes() + 1);
 			}
 			break;
 		case ARMOURED_CARD: // 装甲卡
-			if (region.getInfluenceId() == p.getInfluenceId()/*&& !checkRegionProp(propId)*/) {
+			if (region.getInfluenceId() == p.getInfluenceId()/*
+															 * &&
+															 * !checkRegionProp
+															 * (propId)
+															 */) {
 				if (region.getSoldiers() > 1) {
 					_type = type;
 					_i = i;
 					region.setPropId2(propId);
 					showGame.cardCoord[i][0] = 0;
-					player.setUsePropTimes(player.getUsePropTimes()+1);
+					player.setUsePropTimes(player.getUsePropTimes() + 1);
 					updateProps(propId, _type, p);
 				}
 			}
@@ -650,36 +649,36 @@ public class StateMap implements Common {
 		case BOMBARD_CARD: // 炮击卡
 			if (region.getInfluenceId() != p.getInfluenceId()
 					&& isAdjacency(region, p)) {
-				//if (region.getSoldiers() > 1) {
-					if (region.getPropId() == DEFENSE_CARD) { // 炮击卡和防御卡抵消
-						StateExplosion se = new StateExplosion();
-						se.processSoldiersGrowth(region, this);
-						region.setPropId(0);
+				// if (region.getSoldiers() > 1) {
+				if (region.getPropId() == DEFENSE_CARD) { // 炮击卡和防御卡抵消
+					StateExplosion se = new StateExplosion();
+					se.processSoldiersGrowth(region, this);
+					region.setPropId(0);
+				} else {
+					int r = RandomValue.getRandInt(1, 7);
+					StateExplosion se = new StateExplosion();
+					se.processSoldiersGrowth(region, this);
+					if (region.getSoldiers() > r) {
+						region.setSoldiers((short) (region.getSoldiers() - r));
 					} else {
-						int r = RandomValue.getRandInt(1, 7);
-						StateExplosion se = new StateExplosion();
-						se.processSoldiersGrowth(region, this);
-						if (region.getSoldiers() > r) {
-							region.setSoldiers((short) (region.getSoldiers() - r));
-						} else {
-							region.setSoldiers((short) 1);
-						}
+						region.setSoldiers((short) 1);
 					}
-					p.setUsePropTimes(p.getUsePropTimes()+1);
-					updateProps(propId, type, p);
-				//}
+				}
+				p.setUsePropTimes(p.getUsePropTimes() + 1);
+				updateProps(propId, type, p);
+				// }
 				showGame.cardCoord[i][0] = 0;
 			}
 			break;
 		case AIRATTACK_CARD: // 空袭卡
 			if (region.getInfluenceId() != p.getInfluenceId()) {
-				//if (region.getSoldiers() > 1) {
-					StateExplosion se = new StateExplosion();
-					se.processSoldiersGrowth(region, this);
-					region.setSoldiers((short) 1);
-					p.setUsePropTimes(p.getUsePropTimes()+1);
-					updateProps(propId, type, p);
-				//}
+				// if (region.getSoldiers() > 1) {
+				StateExplosion se = new StateExplosion();
+				se.processSoldiersGrowth(region, this);
+				region.setSoldiers((short) 1);
+				p.setUsePropTimes(p.getUsePropTimes() + 1);
+				updateProps(propId, type, p);
+				// }
 				showGame.cardCoord[i][0] = 0;
 			}
 			break;
@@ -688,7 +687,7 @@ public class StateMap implements Common {
 				updateProps(propId, type, p);
 				showGame.cardCoord[i][0] = 0;
 				player.setInvestigateCard(true);
-				p.setUsePropTimes(p.getUsePropTimes()+1);
+				p.setUsePropTimes(p.getUsePropTimes() + 1);
 			}
 			break;
 		case HIDDEN_CARD: // 隐藏卡
@@ -697,44 +696,31 @@ public class StateMap implements Common {
 				updateProps(propId, type, p);
 				showGame.cardCoord[i][0] = 0;
 				region.setPropId(propId);
-				p.setUsePropTimes(p.getUsePropTimes()+1);
+				p.setUsePropTimes(p.getUsePropTimes() + 1);
 			}
 			break;
 		case COVERT_CARD: // 策反卡
 			if (region.getInfluenceId() != p.getInfluenceId()) {
 				updateProps(propId, type, p);
 				showGame.cardCoord[i][0] = 0;
-				//Region r = serachEnemyRegion(player);
+				// Region r = serachEnemyRegion(player);
 				region.setInfluenceId((short) player.getInfluenceId());
-				p.setUsePropTimes(p.getUsePropTimes()+1);
+				p.setUsePropTimes(p.getUsePropTimes() + 1);
 			}
 			break;
 		}
 	}
 
 	/* 随机查找敌方的区域 */
-	/*private Region serachEnemyRegion(Player p) {
-		Region[] rs = map.getRegions();
-		Region[] regions = null;
-		int j = 0;
-		for (int i = 0; i < rs.length; i++) {
-			if (rs[i].getInfluenceId() != p.getInfluenceId()) {
-				j++;
-			}
-		}
-		regions = new Region[j];
-		for (int i = 0, m = 0; i < rs.length; i++) {
-			if (rs[i].getInfluenceId() != p.getInfluenceId()) {
-				regions[m] = rs[i];
-				m++;
-			}
-		}
-		int ran = 0;
-		if (j != 0) {
-			ran = RandomValue.getRandInt(regions.length - 1);
-		}
-		return regions[ran];
-	}*/
+	/*
+	 * private Region serachEnemyRegion(Player p) { Region[] rs =
+	 * map.getRegions(); Region[] regions = null; int j = 0; for (int i = 0; i <
+	 * rs.length; i++) { if (rs[i].getInfluenceId() != p.getInfluenceId()) {
+	 * j++; } } regions = new Region[j]; for (int i = 0, m = 0; i < rs.length;
+	 * i++) { if (rs[i].getInfluenceId() != p.getInfluenceId()) { regions[m] =
+	 * rs[i]; m++; } } int ran = 0; if (j != 0) { ran =
+	 * RandomValue.getRandInt(regions.length - 1); } return regions[ran]; }
+	 */
 
 	/* 检查该区域是否使用过同类型的道具 */
 	private boolean checkRegionProp(int propId) {
@@ -755,7 +741,7 @@ public class StateMap implements Common {
 
 	/* 判断某个势力是否被消灭 */
 	private boolean isDestroyed(Influence inf) {
-		if (serachRegions(inf)==null/* || serachRegions(inf).length <= 0*/) {
+		if (serachRegions(inf) == null/* || serachRegions(inf).length <= 0 */) {
 			return true;
 		}
 		return false;
@@ -810,14 +796,15 @@ public class StateMap implements Common {
 				region = region_attack;
 				if (leastRegion.getPropId() != HIDDEN_CARD) { // 判断是否用了隐藏卡
 					StateFighting sf = new StateFighting();
-					int index = sf.processFighting(region_attack, region_embattled, this);
+					int index = sf.processFighting(region_attack,
+							region_embattled, this);
 					initRegion();
-					//region = region_embattled;
+					// region = region_embattled;
 					StateExplosion se = new StateExplosion();
-					if(index==1){
+					if (index == 1) {
 						se.processSoldiersGrowth(region_embattled, this);
 					}
-					if(index==-1){
+					if (index == -1) {
 						se.processSoldiersGrowth(region_attack, this);
 					}
 					if (region_embattled.getPropId() == DEFENSE_CARD) { // 防御卡效果消失
@@ -825,7 +812,7 @@ public class StateMap implements Common {
 					}
 
 					// 装甲卡使用之后才清除
-					if (region_attack.getPropId2()!=0) {
+					if (region_attack.getPropId2() != 0) {
 						System.out.println("AI使用了装甲卡");
 						region_attack.setPropId2(0);
 
@@ -836,8 +823,9 @@ public class StateMap implements Common {
 			}
 		}
 	}
-	
+
 	public long recordTime;
+
 	public boolean timePass(int millisSeconds) {
 		long curTime = System.currentTimeMillis();
 		if (recordTime <= 0) {
@@ -853,62 +841,63 @@ public class StateMap implements Common {
 
 	/* AI使用道具 */
 	private void AIUseProps(Player ai) {
-		if(timePass(1500)){
+		if (timePass(1500)) {
 			region = serachNoPropRegion(ai);
-			if(showGame.cardCoord[0][1]==AIRATTACK_CARD){   	//空袭卡
+			if (showGame.cardCoord[0][1] == AIRATTACK_CARD) { // 空袭卡
 				region = serachMostRegion(ai);
 				System.out.println("AI使用空袭卡");
 				useCard(showGame.cardCoord[0][1], 1, 0, ai);
-			}else if(showGame.cardCoord[0][1]==BOMBARD_CARD){	//炮击卡
+			} else if (showGame.cardCoord[0][1] == BOMBARD_CARD) { // 炮击卡
 				region = serachMostAdjacencyRegion(ai);
 				System.out.println("AI使用炮击卡");
 				useCard(showGame.cardCoord[0][1], 1, 0, ai);
-			}else if(showGame.cardCoord[0][1]==ARMOURED_CARD){	//装甲卡
+			} else if (showGame.cardCoord[0][1] == ARMOURED_CARD) { // 装甲卡
 				region = serachNoProp2Region(ai);
 				region.setPropId2(showGame.cardCoord[0][1]);
 				System.out.println("AI使用装甲卡");
 				updateProps(showGame.cardCoord[0][1], 0, ai);
 				showGame.cardCoord[0][0] = 0;
-			}else{
-				System.out.println("AI使用防守卡,propId:"+showGame.cardCoord[0][1]);
+			} else {
+				System.out
+						.println("AI使用防守卡,propId:" + showGame.cardCoord[0][1]);
 				useCard(showGame.cardCoord[0][1], 1, 0, ai);
 			}
 		}
 	}
-	
-	/*搜索己方随机一块区域
-	private Region serachRegion(Player ai){
-		Region[] regions = serachRegionsByInfId(ai.getInfluenceId());
-		int r = RandomValue.getRandInt(regions.length-1);
-		System.out.println("regions.length:"+regions.length);
-		System.out.println("r:"+r);
-		return regions[r];
-	}*/
-	
-	/*搜索相邻的兵数最多的敌方某一块区域*/
-	private Region serachMostAdjacencyRegion(Player ai){
+
+	/*
+	 * 搜索己方随机一块区域 private Region serachRegion(Player ai){ Region[] regions =
+	 * serachRegionsByInfId(ai.getInfluenceId()); int r =
+	 * RandomValue.getRandInt(regions.length-1);
+	 * System.out.println("regions.length:"+regions.length);
+	 * System.out.println("r:"+r); return regions[r]; }
+	 */
+
+	/* 搜索相邻的兵数最多的敌方某一块区域 */
+	private Region serachMostAdjacencyRegion(Player ai) {
 		Region[] regions = map.getRegions();
 		Region r = null;
-		for(int i=0;i<regions.length;i++){
-			if((r==null || r.getSoldiers()<regions[i].getSoldiers()) 
-					&& regions[i].getInfluenceId()!=ai.getInfluenceId()
-					&& isAdjacency(regions[i], ai)){
+		for (int i = 0; i < regions.length; i++) {
+			if ((r == null || r.getSoldiers() < regions[i].getSoldiers())
+					&& regions[i].getInfluenceId() != ai.getInfluenceId()
+					&& isAdjacency(regions[i], ai)) {
 				r = regions[i];
 			}
 		}
 		return r;
 	}
-	
-	/*搜索敌方兵数最多的一个区域*/
-	private Region serachMostRegion(Player ai){
+
+	/* 搜索敌方兵数最多的一个区域 */
+	private Region serachMostRegion(Player ai) {
 		Region[] regions = map.getRegions();
 		Region r = null;
-		for(int i=0;i<regions.length;i++){
-			if((r==null || r.getSoldiers()<regions[i].getSoldiers()) && regions[i].getInfluenceId()!=ai.getInfluenceId()){
+		for (int i = 0; i < regions.length; i++) {
+			if ((r == null || r.getSoldiers() < regions[i].getSoldiers())
+					&& regions[i].getInfluenceId() != ai.getInfluenceId()) {
 				r = regions[i];
 			}
 		}
-		if(r!=null){
+		if (r != null) {
 			r.printInfo2();
 		}
 		return r;
@@ -917,7 +906,7 @@ public class StateMap implements Common {
 	/* 判断AI攻击是否结束 */
 	public boolean AIAttackIsOver(Player ai) {
 		Region[] rs = serachRegions(map.getInfluence(ai.getInfluenceId()));
-		if(rs.length<=0){
+		if (rs.length <= 0) {
 			return true;
 		}
 		for (int i = 0; i < rs.length; i++) {
@@ -984,29 +973,30 @@ public class StateMap implements Common {
 		}
 		if (key.containsAndRemove(KeyCode.OK)) {
 			int result = saveAttainment.readGameRecord(engine.attainmentId);
-			if(result==0){
+			if (result == 0) {
 				engine.isFreshMan = false;
 			}
-			if(engine.isFreshMan){ //新手
+			if (engine.isFreshMan) { // 新手
 				StateFreshMan sfm = new StateFreshMan();
 				sfm.processFreshMan();
 			}
-			
+
 			try {
-				int i = RandomValue.getRandInt(Resource.mapPaths[index].length-1);
+				int i = RandomValue
+						.getRandInt(Resource.mapPaths[index].length - 1);
 				map = WWMap.loadWWMap(Resource.mapPaths[index][i]);
-				//map = WWMap.loadWWMap(mapPaths[0]);
+				// map = WWMap.loadWWMap(mapPaths[0]);
 				influences = map.getInfluences();
 				playCount = influences.length;
 				assignForcs();
 				ais[0].setState(STATUS_ATTACK);
-				if(ais[0].getId()!=player.getId()){
+				if (ais[0].getId() != player.getId()) {
 					startGame = true;
 					pm.randomAssignProps(ais[0]);
 				}
 				state = STATE_SEL_REGION;
-				/*判断是否是新手*/
-				if(engine.isFreshMan){
+				/* 判断是否是新手 */
+				if (engine.isFreshMan) {
 					saveAttainment.saveGameRecord();
 					engine.isFreshMan = false;
 				}
@@ -1054,25 +1044,23 @@ public class StateMap implements Common {
 			}
 		}
 	}
-	
-	/*private Player getPlayerById(int id){
-		for(int i=0;i<ais.length;i++){
-			if(ais[i].getId()==id){
-				return ais[i];
-			}
-		}
-		return null;
-	}*/
-	
+
+	/*
+	 * private Player getPlayerById(int id){ for(int i=0;i<ais.length;i++){
+	 * if(ais[i].getId()==id){ return ais[i]; } } return null; }
+	 */
+
 	/* 排名积分计算公式 */
 	private int rankListScores(Player p) {
 
-		System.out.println("getSoldiersInfluence(p):" + getSoldiersInfluence(p));
+		System.out
+				.println("getSoldiersInfluence(p):" + getSoldiersInfluence(p));
 		System.out.println("p.getRounds():" + p.getRounds());
 		System.out.println("playCount:" + playCount);
 
 		// 单机排名积分=单机排名积分=总兵数*10+(50-回合数)*100+玩家数*300(每周清0)
-		return getSoldiersInfluence(p) * 10 + (50 - p.getRounds()) * 100 + playCount * 300;
+		return getSoldiersInfluence(p) * 10 + (50 - p.getRounds()) * 100
+				+ playCount * 300;
 
 	}
 
@@ -1089,14 +1077,14 @@ public class StateMap implements Common {
 	/* 士兵增长 */
 	public void SoldiersGrowth(Influence inf) {
 		Player p = serachAIByInfluence(inf);
-		if(p==null){
+		if (p == null) {
 			return;
 		}
 		Region[] regions = serachRegions(inf);
 		int count = regions.length + p.getSoliders();
-		//System.out.println("regions.length=" + regions.length);
-		//System.out.println("soliders=" + p.getSoliders());
-		//System.out.println("count=" + count);
+		// System.out.println("regions.length=" + regions.length);
+		// System.out.println("soliders=" + p.getSoliders());
+		// System.out.println("count=" + count);
 		p.setSoliders(0);
 		Region r;
 		for (int i = 0; i < regions.length; i++) {
@@ -1111,30 +1099,33 @@ public class StateMap implements Common {
 				if ((r.getSoldiers() + n) > 8) {
 					n = 8 - r.getSoldiers();
 				}
-				r.setGrowthSoldiers((short)n);
+				r.setGrowthSoldiers((short) n);
 				count -= n;
 			}
 
 			/* 到了最后一个士兵数没有分配完则剩余的士兵数全分给最后一个区域 */
 			if (count > 0 && r == regions[regions.length - 1]) {
 				if ((r.getSoldiers() + count) > 8) {
-					r.setGrowthSoldiers((short)(8-r.getSoldiers()));
+					r.setGrowthSoldiers((short) (8 - r.getSoldiers()));
 				} else {
-					r.setGrowthSoldiers((short)(count));
+					r.setGrowthSoldiers((short) (count));
 				}
-				//System.out.println("r.nums:" + r.getGrowthSoldiers());
+				// System.out.println("r.nums:" + r.getGrowthSoldiers());
 			}
 		}
 	}
 
-	private void SoldiersGrowth2(Influence inf){
+	private void SoldiersGrowth2(Influence inf) {
 		Region[] regions = serachRegions(inf);
-		for(int i=0;i<regions.length;i++){
-			regions[i].setSoldiers((short)(regions[i].getSoldiers()+regions[i].getGrowthSoldiers()));
-			regions[i].setGrowthSoldiers((short)0);
+		for (int i = 0; i < regions.length; i++) {
+			regions[i]
+					.setSoldiers((short) (regions[i].getSoldiers() + regions[i]
+							.getGrowthSoldiers()));
+			regions[i].setGrowthSoldiers((short) 0);
 		}
 	}
-	public void show(Graphics g) {
+
+	public void show(SGraphics g) {
 		switch (state) {
 		case STATE_SEL_MAP:
 			showSelectMap(g);
@@ -1147,7 +1138,7 @@ public class StateMap implements Common {
 		}
 	}
 
-	public void showSelectRegion(Graphics g) {
+	public void showSelectRegion(SGraphics g) {
 		g.setColor(0XFFFFFF);
 		g.fillRect(0, 0, engine.getScreenWidth(), engine.getScreenHeight());
 		map.drawMap(g, activePlayers(), currPlayer, pm.game_props, showGame,
@@ -1160,7 +1151,7 @@ public class StateMap implements Common {
 		 */
 	}
 
-	private void showSelectMap(Graphics g) {
+	private void showSelectMap(SGraphics g) {
 		/*
 		 * g.setColor(0); g.fillRect(0, 0, engine.getScreenWidth(),
 		 * engine.getScreenHeight()); mapMenu.show(g);

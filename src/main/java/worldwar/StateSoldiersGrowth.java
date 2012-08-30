@@ -1,8 +1,8 @@
 package worldwar;
 
-import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
+import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.key.KeyCode;
 import cn.ohyeah.stb.key.KeyState;
 
@@ -17,7 +17,7 @@ public class StateSoldiersGrowth implements Common{
 		running = true;
 		try {
 			KeyState keyState = engine.getKeyState();
-			Graphics g = engine.getGraphics();
+			SGraphics g = engine.getSGraphics();
 			while (running) {
 				handleSoldiersGrowth(keyState);
 				if (running) {
@@ -43,7 +43,7 @@ public class StateSoldiersGrowth implements Common{
 		
 	}
 
-	private void showSoldiersGrowth(Graphics g, Player p, StateMap sm) {
+	private void showSoldiersGrowth(SGraphics g, Player p, StateMap sm) {
 		
 		/*ÖØ»æ*/
 		sm.showSelectRegion(g);

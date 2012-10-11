@@ -184,5 +184,5 @@ public class WorldWarEngine extends GameCanvasEngine implements Common{
 	private void showGameMenu(SGraphics g) {
 		showGame.drawMainMenu(g, mainIndex, favorIndex);
 	}
-	
+
 }

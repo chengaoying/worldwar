@@ -1,5 +1,6 @@
 package worldwar;
 
+import cn.ohyeah.stb.game.Recharge;
 import cn.ohyeah.stb.game.SGraphics;
 import cn.ohyeah.stb.game.StateRecharge;
 import cn.ohyeah.stb.key.KeyCode;
@@ -99,7 +100,8 @@ public class StateShop {
 				showGame.clearShop();
 			} else	if(shopY==3 && shopX==0){ //Ω¯»Î≥‰÷µ
 				showGame.clearShop();
-				StateRecharge recharge = new StateRecharge(engine);
+				//StateRecharge recharge = new StateRecharge(engine);
+				Recharge recharge = new Recharge(engine);
 				recharge.recharge();
 			}else{
 				PopupConfirm pc = UIResource.getInstance().buildDefaultPopupConfirm();

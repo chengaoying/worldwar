@@ -1,6 +1,7 @@
 package worldwar;
 
 import cn.ohyeah.itvgame.model.OwnProp;
+import cn.ohyeah.stb.game.Recharge;
 import cn.ohyeah.stb.game.ServiceWrapper;
 import cn.ohyeah.stb.game.StateRecharge;
 import cn.ohyeah.stb.res.UIResource;
@@ -249,7 +250,7 @@ public class PropManager implements Common{
 			PopupConfirm pc = UIResource.getInstance().buildDefaultPopupConfirm();
 			pc.setText("游戏币不足,是否充值");
 			if (pc.popup() == 0) {
-				StateRecharge recharge = new StateRecharge(engine);
+				Recharge recharge = new Recharge(engine);
 				recharge.recharge();
 			}
 			return false;
